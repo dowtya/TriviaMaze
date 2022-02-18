@@ -46,7 +46,7 @@ public class Game {
 	}
 	
 	handleQuestionSelection() {
-		questionbox.askNextQuestion(handleQuestionResolution);
+		questionState = questionbox.askNextQuestion(questionState, handleQuestionResolution);
 	}
 	
 	handleQuestionResolution() {
