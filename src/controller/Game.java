@@ -1,8 +1,10 @@
 package controller;
 
+import java.util.function.Function;
+
 import gui.Map;
 import gui.OptionBar;
-import gui.Questionbox;
+import gui.QuestionBox;
 import model.GameState;
 
 public class Game {
@@ -10,21 +12,20 @@ public class Game {
 	GameState gamestate;
 	
 	Map map;
-	Questionbox questionbox;
+	QuestionBox questionbox;
 	OptionBar optionbar;
 	
 	
-	start(filename) {
+	public void start(String filename, Function<Void,Void> exitRoutine) {
 		
 		// if file provided, load gamestate from file
 		// otherwise, randomly generate gamestate
 		
 		// create map
-		
-		Map map = new Map(gamestate);
+		map = new Map(gamestate);
 		
 		// create questionbox
-		Questionbox = new Questionbox(gamestate);
+		questionbox = new Questionbox(gamestate);
 		
 		// create optionbar
 		optionbar = new OptionBar();
@@ -37,19 +38,19 @@ public class Game {
 		
 	}
 	
-	handleMovementSelection() {
+	void handleMovementSelection() {
 		Map.getPlayerMovement(handleMovementResolution);
 	}
 	
-	handleMovementResolution(direction) {
+	void handleMovementResolution(direction) {
 		handleQuestionSelection()
 	}
 	
-	handleQuestionSelection() {
+	void handleQuestionSelection() {
 		questionState = questionbox.askNextQuestion(questionState, handleQuestionResolution);
 	}
 	
-	handleQuestionResolution() {
+	void handleQuestionResolution() {
 		if (QuestionBox.successfulAnswer) {
 			gamestate.x = x + direction;
 			gamestate.y = y + direction;
