@@ -83,10 +83,12 @@ public class Game {
 		System.out.println("You have lost, no more moves were found. Better luck next time!");
 	}
 	
+	//incomplete
 	public void exit() {
 		
 	}
 	
+	//incomplete
 	public boolean checkforBoxedIn() {
 		boolean boxedIn;
 		
