@@ -22,7 +22,7 @@ public class SQLDatabase {
             e.printStackTrace();
             System.exit(0);
         }
-        System.out.println( "Opened database successfully" );
+        //System.out.println( "Opened database successfully" );
         return c;
     }
 }
