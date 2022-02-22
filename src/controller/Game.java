@@ -54,7 +54,7 @@ public class Game {
 			gamestate.x = x + direction;
 			gamestate.y = y + direction;
 			
-			if (gamestate.x == gamestate.mazeWidth - 1 && gamestate.y == gamestate.mazeHeight - 1) {
+			if (gamestate.getXCoord() == gamestate.getMazeWidth() - 1 && gamestate.getYCoord() == gamestate.getMazeHeight() - 1) {
 				displayVictory();
 				exit();
 			}
@@ -70,6 +70,27 @@ public class Game {
 		
 		Map.updateVisuals(gamestate);
 		handleMovementSelection();
+	}
+	
+	
+	
+	public void displayVictory() {
+		
+		System.out.println("You win!");
+	}
+	
+	public void displayFailure() {
+		System.out.println("You have lost, no more moves were found. Better luck next time!");
+	}
+	
+	public void exit() {
+		
+	}
+	
+	public boolean checkforBoxedIn() {
+		boolean boxedIn;
+		
+		return boxedIn;
 	}
 		
 }

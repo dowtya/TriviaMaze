@@ -1,7 +1,13 @@
 package model;
 
-public class GameState {
+import java.io.*;
+
+public class GameState implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7912621071699318862L;
 	int mazeWidth;
 	int mazeHeight;
 	boolean paths[][]; // which paths are closed/unavailable;
@@ -17,6 +23,22 @@ public class GameState {
 	enum direction {Up, Down, Left, Right, None}; // which direction they are going
 	
 	
-	Serialize();
-	Deserialize();
+
+	
+	
+	public int getMazeWidth() {
+		return mazeWidth;
+	}
+	
+	public int getMazeHeight() {
+		return mazeHeight;
+	}
+	
+	public int getXCoord() {
+		return x;
+	}
+	
+	public int getYCoord() {
+		return y;
+	}
 }
