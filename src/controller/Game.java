@@ -2,7 +2,7 @@ package controller;
 
 import gui.Map;
 import gui.OptionBar;
-import gui.Questionbox;
+import gui.QuestionBox;
 import model.GameState;
 
 public class Game {
@@ -10,7 +10,7 @@ public class Game {
 	GameState gamestate;
 	
 	Map map;
-	Questionbox questionbox;
+	QuestionBox questionbox;
 	OptionBar optionbar;
 	
 	
@@ -36,35 +36,54 @@ public class Game {
 		}
 		
 	}
-	
-	handleMovementSelection() {
+	//Method should handle movement selection, so it needs to show the options for movement, and call the
+	//correct method when a selection is chosen.
+	public void handleMovementSelection() {
 		Map.getPlayerMovement(handleMovementResolution);
+		
+		
 	}
 	
-	handleMovementResolution(direction) {
-		handleQuestionSelection()
+	//This method will handle what happens based on correctness of the question answer they provide.
+	public void handleMovementResolution(direction) {
+		handleQuestionResolution();
 	}
 	
-	handleQuestionSelection() {
+	//This method will handle the question selection from the SQL database and work on displaying it.
+	public void handleQuestionSelection() {
 		questionState = questionbox.askNextQuestion(questionState, handleQuestionResolution);
 	}
 	
-	handleQuestionResolution() {
+	public void handleQuestionResolution() {
 		if (QuestionBox.successfulAnswer) {
-			gamestate.x = x + direction;
-			gamestate.y = y + direction;
+			
+			if (direction == EAST) {
+				gamestate.setXCoord(gamestate.myXCoord + 1);
+			}
+			if (direction == SOUTH) {
+				//add +1 to row part of 2d array
+				gamestate.setYCoord(gamestate.getYCoord() + 1);
+			}
+			if (direction == WEST) {
+				gamestate.setXCoord(gamestate.myXCoord - 1);
+			}
+			
+			if (direction == NORTH) {
+				//add +1 to row part of 2d array
+				gamestate.setYCoord(gamestate.getYCoord() - 1);
+			}
 			
 			if (gamestate.getXCoord() == gamestate.getMazeWidth() - 1 && gamestate.getYCoord() == gamestate.getMazeHeight() - 1) {
 				displayVictory();
-				exit();
+				displayGameOver();
 			}
 			
 		} else {
-			gamestate.paths[x, y] = true; // block path in gamestate
+			gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord] = true; // block path in gamestate
 			
 			if (checkForBoxedIn() == true) {
 				displayFailure();
-				exit();
+				displayGameOver();
 			}
 		}
 		
@@ -83,13 +102,14 @@ public class Game {
 		System.out.println("You have lost, no more moves were found. Better luck next time!");
 	}
 	
-	//incomplete
-	public void exit() {
-		
+	
+	public void displayGameOver() {	
+		System.out.println("GAME OVER! \nThank you for playing our game, the game will now exit.");
+		System.exit(0);		
 	}
 	
 	//incomplete
-	public boolean checkforBoxedIn() {
+	public boolean checkForBoxedIn() {
 		boolean boxedIn;
 		
 		return boxedIn;
