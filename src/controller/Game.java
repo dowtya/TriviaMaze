@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.function.Function;
+
 import gui.Map;
 import gui.OptionBar;
 import gui.QuestionBox;
@@ -10,10 +12,14 @@ public class Game {
 	GameState gamestate;
 	
 	Map map;
-	QuestionBox questionbox;
+	QuestionController questioncontroller;
 	OptionBar optionbar;
 	
-	
+	/**
+	 * Problems atm, Need to work on this on sunday, I think it would just be a way to open up
+	 * and search for a file to read, but I don't have much experience with loading files at all
+	 * so I need to do further research to make this possible.
+	 */
 	start(filename) {
 		
 		// if file provided, load gamestate from file
@@ -29,8 +35,8 @@ public class Game {
 		// create optionbar
 		optionbar = new OptionBar();
 		
-		if (gamestate.direction == None) {
-			handleMovmenetSelection();
+		if (gamestate.direction == NONE) {
+			handleMovementSelection();
 		} else {
 			handleQuestionSelection();
 		}
@@ -45,30 +51,40 @@ public class Game {
 	}
 	
 	//This method will handle what happens based on correctness of the question answer they provide.
-	public void handleMovementResolution(direction) {
+	//Stores the direction that was selected.  Psuedo code atm!
+	//Variable issue, it needs to take in a direction parameter but was having issues for some dumb reason.
+	public void handleMovementResolution() {
 		handleQuestionResolution();
+		
+		//take direction in and store in a variable
+		
+		// Direction currentDirection = theDirection;
+		
+		
 	}
 	
 	//This method will handle the question selection from the SQL database and work on displaying it.
+	//Check Variables
 	public void handleQuestionSelection() {
-		questionState = questionbox.askNextQuestion(questionState, handleQuestionResolution);
+		gamestate.setQuestionState(questioncontroller.askNextQuestion(gamestate.getQuestionState(), 
+								  (Function<Game,Void>)(Game game)->{game.handleQuestionResolution();}, this));
 	}
 	
 	public void handleQuestionResolution() {
-		if (QuestionBox.successfulAnswer) {
+		if (gamestate.getQuestionState().isAnsweredCorrectly()) {
 			
-			if (direction == EAST) {
+			if (gamestate.getDirection() == GameState.Direction.EAST) {
 				gamestate.setXCoord(gamestate.myXCoord + 1);
 			}
-			if (direction == SOUTH) {
+			if (gamestate.getDirection() == GameState.Direction.SOUTH) {
 				//add +1 to row part of 2d array
 				gamestate.setYCoord(gamestate.getYCoord() + 1);
 			}
-			if (direction == WEST) {
+			if (gamestate.getDirection() == GameState.Direction.WEST) {
 				gamestate.setXCoord(gamestate.myXCoord - 1);
 			}
 			
-			if (direction == NORTH) {
+			if (gamestate.getDirection() == GameState.Direction.NORTH) {
 				//add +1 to row part of 2d array
 				gamestate.setYCoord(gamestate.getYCoord() - 1);
 			}

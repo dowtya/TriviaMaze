@@ -16,14 +16,31 @@ public class GameState implements Serializable {
 	public int myYCoord = 0; // current player y-coord
 	
 	
-	QuestionState questions; // some way to identify what question set is used
+	private QuestionState myQuestions; // some way to identify what question set is used
 			// and some way to identify what questions have already been asked
 	
 	
-	enum direction {Up, Down, Left, Right, None}; // which direction they are going
+	public enum Direction {NORTH, SOUTH, WEST, EAST, NONE}; // which direction they are going
+	private Direction myDirection = Direction.NONE;
 	
 	
-
+	
+	
+	public QuestionState getQuestionState() {
+		return myQuestions;
+	}
+	
+	public void setQuestionState(QuestionState theQuestions) {
+		myQuestions = theQuestions;
+	}
+	
+	public Direction getDirection() {
+		return myDirection;
+	}
+	
+	public void setDirection(Direction theDirection) {
+		myDirection = theDirection;
+	}
 	
 	
 	public int getMazeWidth() {
