@@ -12,11 +12,19 @@ public class Game {
 	GameState gamestate;
 	
 	Map map;
-	QuestionBox questionbox;
+	QuestionController questioncontroller;
 	OptionBar optionbar;
 	
 	
 	public void start(String filename, Function<Void,Void> exitRoutine) {
+	QuestionController questioncontroller;
+	OptionBar optionbar;
+	
+	/**
+	 * Problems atm, Need to work on this on sunday, I think it would just be a way to open up
+	 * and search for a file to read, but I don't have much experience with loading files at all
+	 * so I need to do further research to make this possible.
+	 */
 		
 		// if file provided, load gamestate from file
 		// otherwise, randomly generate gamestate
@@ -25,47 +33,78 @@ public class Game {
 		map = new Map(gamestate);
 		
 		// create questionbox
-		questionbox = new Questionbox(gamestate);
+		questionbox = new QuestionBox(gamestate);
 		
 		// create optionbar
 		optionbar = new OptionBar();
 		
-		if (gamestate.direction == None) {
-			handleMovmenetSelection();
+		if (gamestate.getDirection() == GameState.Direction.NONE) {
+			handleMovementSelection();
 		} else {
 			handleQuestionSelection();
 		}
 		
 	}
 	
-	void handleMovementSelection() {
+	//Method should handle movement selection, so it needs to show the options for movement, and call the
+	//correct method when a selection is chosen.
+	public void handleMovementSelection() {
 		Map.getPlayerMovement(handleMovementResolution);
+	
 	}
 	
-	void handleMovementResolution(direction) {
-		handleQuestionSelection()
+
+	//This method will handle what happens based on correctness of the question answer they provide.
+	//Stores the direction that was selected.  Psuedo code atm!
+	//Variable issue, it needs to take in a direction parameter but was having issues for some dumb reason.
+	public void handleMovementResolution() {
+		handleQuestionResolution();
+		
+		//take direction in and store in a variable
+		
+		// Direction currentDirection = theDirection;
+		
+		
 	}
 	
-	void handleQuestionSelection() {
-		questionState = questionbox.askNextQuestion(questionState, handleQuestionResolution);
+	//This method will handle the question selection from the SQL database and work on displaying it.
+	//Check Variables
+	public void handleQuestionSelection() {
+		gamestate.setQuestionState(questioncontroller.askNextQuestion(gamestate.getQuestionState(), 
+								  (Function<Game,Void>)(Game game)->{game.handleQuestionResolution();}, this));
+		
 	}
 	
-	void handleQuestionResolution() {
-		if (QuestionBox.successfulAnswer) {
-			gamestate.x = x + direction;
-			gamestate.y = y + direction;
+	public void handleQuestionResolution() {
+		if (gamestate.getQuestionState().isAnsweredCorrectly()) {
+			
+			if (gamestate.getDirection() == GameState.Direction.EAST) {
+				gamestate.setXCoord(gamestate.myXCoord + 1);
+			}
+			if (gamestate.getDirection() == GameState.Direction.SOUTH) {
+				//add +1 to row part of 2d array
+				gamestate.setYCoord(gamestate.getYCoord() + 1);
+			}
+			if (gamestate.getDirection() == GameState.Direction.WEST) {
+				gamestate.setXCoord(gamestate.myXCoord - 1);
+			}
+			
+			if (gamestate.getDirection() == GameState.Direction.NORTH) {
+				//add +1 to row part of 2d array
+				gamestate.setYCoord(gamestate.getYCoord() - 1);
+			}
 			
 			if (gamestate.getXCoord() == gamestate.getMazeWidth() - 1 && gamestate.getYCoord() == gamestate.getMazeHeight() - 1) {
 				displayVictory();
-				exit();
+				displayGameOver();
 			}
 			
 		} else {
-			gamestate.paths[x, y] = true; // block path in gamestate
+			gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord] = true; // block path in gamestate
 			
 			if (checkForBoxedIn() == true) {
 				displayFailure();
-				exit();
+				displayGameOver();
 			}
 		}
 		
@@ -84,14 +123,15 @@ public class Game {
 		System.out.println("You have lost, no more moves were found. Better luck next time!");
 	}
 	
-	//incomplete
-	public void exit() {
-		
+	
+	public void displayGameOver() {	
+		System.out.println("GAME OVER! \nThank you for playing our game, the game will now exit.");
+		System.exit(0);		
 	}
 	
 	//incomplete
-	public boolean checkforBoxedIn() {
-		boolean boxedIn;
+	public boolean checkForBoxedIn() {
+		boolean boxedIn = false;
 		
 		return boxedIn;
 	}
