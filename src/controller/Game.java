@@ -12,14 +12,10 @@ public class Game {
 	GameState gamestate;
 	
 	Map map;
-	QuestionController questioncontroller;
+	private QuestionController myQuestioncontroller;
 	OptionBar optionbar;
-	
 	
 	public void start(String filename, Function<Void,Void> exitRoutine) {
-	QuestionController questioncontroller;
-	OptionBar optionbar;
-	
 	/**
 	 * Problems atm, Need to work on this on sunday, I think it would just be a way to open up
 	 * and search for a file to read, but I don't have much experience with loading files at all
@@ -29,11 +25,13 @@ public class Game {
 		// if file provided, load gamestate from file
 		// otherwise, randomly generate gamestate
 		
+		gamestate = new GameState(5,5);
+		
 		// create map
-		map = new Map(gamestate);
+		map = new Map(this);
 		
 		// create questionbox
-		questionbox = new QuestionBox(gamestate);
+		myQuestioncontroller = new QuestionController();
 		
 		// create optionbar
 		optionbar = new OptionBar();
@@ -49,8 +47,7 @@ public class Game {
 	//Method should handle movement selection, so it needs to show the options for movement, and call the
 	//correct method when a selection is chosen.
 	public void handleMovementSelection() {
-		Map.getPlayerMovement(handleMovementResolution);
-	
+		map.getPlayerMovement();
 	}
 	
 
@@ -58,7 +55,7 @@ public class Game {
 	//Stores the direction that was selected.  Psuedo code atm!
 	//Variable issue, it needs to take in a direction parameter but was having issues for some dumb reason.
 	public void handleMovementResolution() {
-		handleQuestionResolution();
+		handleQuestionSelection();
 		
 		//take direction in and store in a variable
 		
@@ -70,9 +67,19 @@ public class Game {
 	//This method will handle the question selection from the SQL database and work on displaying it.
 	//Check Variables
 	public void handleQuestionSelection() {
-		gamestate.setQuestionState(questioncontroller.askNextQuestion(gamestate.getQuestionState(), 
-								  (Function<Game,Void>)(Game game)->{game.handleQuestionResolution();}, this));
+		gamestate.setQuestionState(myQuestioncontroller.askNextQuestion(gamestate.getQuestionState(), 
+								  (Function<Game,Void>)(Game game)->{game.handleQuestionResolution(); return null;}, this));
 		
+	}
+	
+	public QuestionBox getQuestionBox() {
+		return myQuestioncontroller.myQuestionBox;
+	}
+	public GameState getGameState() {
+		return gamestate;
+	}
+	public Map getMap() {
+		return map;
 	}
 	
 	public void handleQuestionResolution() {
@@ -108,8 +115,8 @@ public class Game {
 			}
 		}
 		
-		Map.updateVisuals(gamestate);
-		handleMovementSelection();
+		map.updateVisuals();
+		map.getPlayerMovement();//handleMovementSelection();
 	}
 	
 	

@@ -12,8 +12,8 @@ public class GameState implements Serializable {
 	private int myMazeHeight;
 	public boolean myPaths[][]; // which paths are closed/unavailable;
 	
-	public int myXCoord = 0; // current player x-coord
-	public int myYCoord = 0; // current player y-coord
+	public int myXCoord; // current player x-coord
+	public int myYCoord; // current player y-coord
 	
 	
 	private QuestionState myQuestions; // some way to identify what question set is used
@@ -21,9 +21,17 @@ public class GameState implements Serializable {
 	
 	
 	public enum Direction {NORTH, SOUTH, WEST, EAST, NONE}; // which direction they are going
-	private Direction myDirection = Direction.NONE;
+	private Direction myDirection;
 	
-	
+	public GameState(int theMazeWidth, int theMazeHeight) {
+		myMazeWidth = theMazeWidth;
+		myMazeHeight = theMazeHeight;
+		myXCoord = 0;
+		myYCoord = 0;
+		myQuestions = new QuestionState();
+		myDirection = Direction.NONE;
+		myPaths = new boolean[myMazeWidth][myMazeHeight];
+	}
 	
 	
 	public QuestionState getQuestionState() {

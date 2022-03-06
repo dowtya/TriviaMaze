@@ -3,7 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.function.Function;
 
 import javax.swing.BorderFactory;
@@ -17,12 +17,13 @@ public class AnswerPanel extends JPanel implements ActionListener {
 	
 	ActionListener myAnswerResultHandler;
 	
-	List<JButton> mySingleChoiceButtons;
+	ArrayList<JButton> mySingleChoiceButtons;
 	boolean isCorrect;
 	
 	Function<Integer, Boolean> myEvalAnswerFunc;
 	
 	public AnswerPanel() {
+		mySingleChoiceButtons = new ArrayList<JButton>();
 		this.setBorder(BorderFactory.createTitledBorder("Answers"));
 	}
 	
