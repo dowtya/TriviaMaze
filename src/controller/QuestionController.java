@@ -9,6 +9,10 @@ public class QuestionController {
 	
 	QuestionBox myQuestionBox;
 	
+	QuestionController() {
+		myQuestionBox = new QuestionBox();
+	}
+	
 	QuestionState askNextQuestion(QuestionState questionState, Function<Game, Void> function, Game game) {
 		
 		String question = "TEST";
@@ -16,10 +20,10 @@ public class QuestionController {
 		
 		//TODO: determine question and answers
 		
-		
+		//
 		myQuestionBox.displaySingleChoiceQuestion(question, answers, (index) -> {
 			// evaluate if the answer at that index is correct
-			return false;
+			return true;
 		});
 		
 		

@@ -1,4 +1,5 @@
 package gui;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,11 +22,17 @@ public class QuestionBox extends JPanel implements ActionListener {
 	public QuestionBox() {
 		questionPanel = new JLabel();
 		answerPanel = new AnswerPanel();
+		answerPanel.setBounds(50, 20, 200, 200);
+		answerPanel.setBackground(Color.gray);
 		
 		questionPanel.setBorder(BorderFactory.createTitledBorder("Question"));
-		
+		questionPanel.setBounds(50, 240, 200, 200);
+		questionPanel.setBackground(Color.gray);
 		this.add(questionPanel);
 		this.add(answerPanel);
+		this.setBounds(0,0,1000,1000);
+		this.setLayout(null);
+		this.repaint();
 	}
 	
 	public void actionPerformed(ActionEvent e) {

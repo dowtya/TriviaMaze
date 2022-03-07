@@ -1,22 +1,85 @@
 package model;
 
-public class GameState {
+import java.io.*;
+
+public class GameState implements Serializable {
 	
-	int mazeWidth;
-	int mazeHeight;
-	boolean paths[][]; // which paths are closed/unavailable;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7912621071699318862L;
+	private int myMazeWidth;
+	private int myMazeHeight;
+	public boolean myPaths[][]; // which paths are closed/unavailable;
 	
-	int x = 0; // current player x-coord
-	int y = 0; // current player y-coord
+	public int myXCoord; // current player x-coord
+	public int myYCoord; // current player y-coord
 	
 	
-	QuestionState questions; // some way to identify what question set is used
+	private QuestionState myQuestions; // some way to identify what question set is used
 			// and some way to identify what questions have already been asked
 	
 	
-	enum direction {Up, Down, Left, Right, None}; // which direction they are going
+	public enum Direction {NORTH, SOUTH, WEST, EAST, NONE}; // which direction they are going
+	private Direction myDirection;
+	
+	public GameState(int theMazeWidth, int theMazeHeight) {
+		myMazeWidth = theMazeWidth;
+		myMazeHeight = theMazeHeight;
+		myXCoord = 0;
+		myYCoord = 0;
+		myQuestions = new QuestionState();
+		myDirection = Direction.NONE;
+		myPaths = new boolean[myMazeWidth][myMazeHeight];
+	}
 	
 	
-	Serialize();
-	Deserialize();
+	public QuestionState getQuestionState() {
+		return myQuestions;
+	}
+	
+	public void setQuestionState(QuestionState theQuestions) {
+		myQuestions = theQuestions;
+	}
+	
+	public Direction getDirection() {
+		return myDirection;
+	}
+	
+	public void setDirection(Direction theDirection) {
+		myDirection = theDirection;
+	}
+	
+	
+	public int getMazeWidth() {
+		return myMazeWidth;
+	}
+	
+	public int getMazeHeight() {
+		return myMazeHeight;
+	}
+	
+	public int getXCoord() {
+		return myXCoord;
+	}
+	
+	public int getYCoord() {
+		return myYCoord;
+	}
+	
+	public void setXCoord(int theXCoord) {
+		myXCoord = theXCoord;
+	}
+	
+	public void setYCoord(int theYCoord) {
+		myYCoord = theYCoord;
+	}
+	
+	
+	public boolean isPathAvailable(boolean thePath[][]) {
+		boolean avail = false;
+		
+		return avail;
+		
+	}
 }
