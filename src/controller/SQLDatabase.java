@@ -11,7 +11,14 @@ import org.sqlite.SQLiteDataSource;
 
 public class SQLDatabase {
 	
-    public static void main(String[] theArgs) {
+	private ArrayList<Question> myQuestionList;
+	
+	public SQLDatabase() {
+		myQuestionList = new ArrayList<Question>();
+	}
+	
+	public static void main(String[] theArgs) {
+		SQLDatabase DB = new SQLDatabase();
     	SQLiteDataSource DataSource = establishConnection("jdbc:sqlite:questions.db");
     	createEmptyTable(DataSource);
     	addMultipleChoice(DataSource, "What year was the very first model of the iphone released?",
@@ -27,8 +34,11 @@ public class SQLDatabase {
     			"Dr. Frankenstein", "Albert Einstein", "Alexander Flemming");
     	addTrueFalse(DataSource, "Java is a type of OS.", "false");
     	addShortAnswer(DataSource, "What is the symbol for potassium?", "K");
-    	ArrayList<Question> questionList = createQuestionList(DataSource);
-    	System.out.println(questionList);
+    	ArrayList<Question> questions = createQuestionList(DataSource);
+    	DB.setMyQuestionList(questions);
+    	for (int i = 0; i < DB.getMyQuestionList().size(); i++) {
+    		System.out.println(DB.myQuestionList.get(i));
+    	}
     }
     
     public static SQLiteDataSource establishConnection(String theURL) {
@@ -42,7 +52,6 @@ public class SQLDatabase {
             System.exit(0);
         }
 
-        System.out.println( "Opened database successfully" );
         return ds;
     }
     
@@ -56,13 +65,11 @@ public class SQLDatabase {
                 "CHOICE3 TEXT)";
         try ( Connection conn = theDS.getConnection();
                 Statement stmt = conn.createStatement(); ) {
-              int rv = stmt.executeUpdate( query );
-              System.out.println( "executeUpdate() returned " + rv );
+                stmt.executeUpdate( query );
           } catch ( SQLException e ) {
               e.printStackTrace();
               System.exit( 0 );
           }
-          System.out.println( "Created questions table successfully" );
     }
     
     public static void addMultipleChoice(SQLiteDataSource theDS, String theQuestion, 
@@ -72,8 +79,7 @@ public class SQLDatabase {
     		theChoice3 + "' )";
         try ( Connection conn = theDS.getConnection();
                 Statement stmt = conn.createStatement(); ) {
-              int rv = stmt.executeUpdate( query );
-              System.out.println( "1st executeUpdate() returned " + rv );
+              stmt.executeUpdate( query );
           } catch ( SQLException e ) {
               e.printStackTrace();
               System.exit( 0 );
@@ -85,8 +91,7 @@ public class SQLDatabase {
         		theQuestion + "', '" + theAnswer + "', 'true', 'false' )";
             try ( Connection conn = theDS.getConnection();
                     Statement stmt = conn.createStatement(); ) {
-                  int rv = stmt.executeUpdate( query );
-                  System.out.println( "1st executeUpdate() returned " + rv );
+                  stmt.executeUpdate( query );
               } catch ( SQLException e ) {
                   e.printStackTrace();
                   System.exit( 0 );
@@ -98,8 +103,7 @@ public class SQLDatabase {
         		theQuestion + "', '" + theAnswer + "' )";
             try ( Connection conn = theDS.getConnection();
                     Statement stmt = conn.createStatement(); ) {
-                  int rv = stmt.executeUpdate( query );
-                  System.out.println( "1st executeUpdate() returned " + rv );
+                  stmt.executeUpdate( query );
               } catch ( SQLException e ) {
                   e.printStackTrace();
                   System.exit( 0 );
@@ -107,8 +111,7 @@ public class SQLDatabase {
     }
     
     public static ArrayList<Question> createQuestionList(SQLiteDataSource theDS) {
-    	ArrayList<Question> result = new ArrayList<Question>();
-        System.out.println( "Selecting all rows from test table" );
+    	ArrayList<Question> result = new ArrayList<Question>(); 
         String query = "SELECT * FROM questions";
 
         try ( Connection conn = theDS.getConnection();
@@ -135,6 +138,14 @@ public class SQLDatabase {
         }
         
         return result;
+    }
+    
+    public ArrayList<Question> getMyQuestionList() {
+    	return myQuestionList;
+    }
+    
+    public void setMyQuestionList(ArrayList<Question> theQuestionList) {
+    	myQuestionList = theQuestionList;
     }
     
 }
