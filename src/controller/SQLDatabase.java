@@ -17,8 +17,8 @@ public class SQLDatabase {
 		myQuestionList = new ArrayList<Question>();
 	}
 	
-	public static void main(String[] theArgs) {
-		SQLDatabase DB = new SQLDatabase();
+	public void setUp() {
+		//SQLDatabase DB = new SQLDatabase();
     	SQLiteDataSource DataSource = establishConnection("jdbc:sqlite:questions.db");
     	createEmptyTable(DataSource);
     	addMultipleChoice(DataSource, "What year was the very first model of the iphone released?",
@@ -35,10 +35,10 @@ public class SQLDatabase {
     	addTrueFalse(DataSource, "Java is a type of OS.", "false");
     	addShortAnswer(DataSource, "What is the symbol for potassium?", "K");
     	ArrayList<Question> questions = createQuestionList(DataSource);
-    	DB.setMyQuestionList(questions);
-    	for (int i = 0; i < DB.myQuestionList.size(); i++) {
-    		System.out.println(DB.myQuestionList.get(i));
-    	}
+    	setMyQuestionList(questions);
+    	//for (int i = 0; i < myQuestionList.size(); i++) {
+    		//System.out.println(myQuestionList.get(i));
+    	//}
     }
     
     public static SQLiteDataSource establishConnection(String theURL) {
@@ -128,7 +128,6 @@ public class SQLDatabase {
                 String choice1 = rs.getString( "CHOICE1");
                 String choice2 = rs.getString( "CHOICE2" );
                 String choice3 = rs.getString( "CHOICE3" );
-
                 Question q = new Question(type, question, rightAnswer, choice1, choice2, choice3);
                 result.add(q);
             }
