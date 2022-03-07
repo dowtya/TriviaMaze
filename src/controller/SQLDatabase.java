@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import org.sqlite.SQLiteDataSource;
 
@@ -26,7 +27,8 @@ public class SQLDatabase {
     			"Dr. Frankenstein", "Albert Einstein", "Alexander Flemming");
     	addTrueFalse(DataSource, "Java is a type of OS.", "false");
     	addShortAnswer(DataSource, "What is the symbol for potassium?", "K");
-    	print(DataSource);
+    	ArrayList<Question> questionList = createQuestionList(DataSource);
+    	System.out.println(questionList);
     }
     
     public static SQLiteDataSource establishConnection(String theURL) {
@@ -104,7 +106,8 @@ public class SQLDatabase {
               }
     }
     
-    public static void print(SQLiteDataSource theDS) {
+    public static ArrayList<Question> createQuestionList(SQLiteDataSource theDS) {
+    	ArrayList<Question> result = new ArrayList<Question>();
         System.out.println( "Selecting all rows from test table" );
         String query = "SELECT * FROM questions";
 
@@ -116,20 +119,22 @@ public class SQLDatabase {
             //walk through each 'row' of results, grab data by column/field name
             // and print it
             while ( rs.next() ) {
+            	String type = rs.getString( "TYPE" );
                 String question = rs.getString( "QUESTION" );
                 String rightAnswer = rs.getString( "ANSWER" );
                 String choice1 = rs.getString( "CHOICE1");
                 String choice2 = rs.getString( "CHOICE2" );
                 String choice3 = rs.getString( "CHOICE3" );
 
-                System.out.println("Result: Question = " + question +
-                    ", Answer = " + rightAnswer + ", choice1 = " + 
-                		choice1 + ", choice2 = " + choice2 + ", choice3 = " + choice3);
+                Question q = new Question(type, question, rightAnswer, choice1, choice2, choice3);
+                result.add(q);
             }
         } catch ( SQLException e ) {
             e.printStackTrace();
             System.exit( 0 );
         }
+        
+        return result;
     }
     
 }
