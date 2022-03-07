@@ -1,7 +1,7 @@
 package controller;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+//import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,7 +36,7 @@ public class SQLDatabase {
     	addShortAnswer(DataSource, "What is the symbol for potassium?", "K");
     	ArrayList<Question> questions = createQuestionList(DataSource);
     	DB.setMyQuestionList(questions);
-    	for (int i = 0; i < DB.getMyQuestionList().size(); i++) {
+    	for (int i = 0; i < DB.myQuestionList.size(); i++) {
     		System.out.println(DB.myQuestionList.get(i));
     	}
     }
