@@ -30,6 +30,10 @@ public class Game {
 		// create map
 		map = new Map(this);
 		
+		// create database
+		//SQLDatabase DB = new SQLDatabase();
+		//DB.setUp();
+		
 		// create questionbox
 		myQuestioncontroller = new QuestionController();
 		

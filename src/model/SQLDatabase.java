@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import java.sql.Connection;
 //import java.sql.DriverManager;
@@ -19,22 +19,22 @@ public class SQLDatabase {
 	
 	public void setUp() {
 		//SQLDatabase DB = new SQLDatabase();
-    	SQLiteDataSource DataSource = establishConnection("jdbc:sqlite:questions.db");
-    	createEmptyTable(DataSource);
-    	addMultipleChoice(DataSource, "What year was the very first model of the iphone released?",
+    	SQLiteDataSource DS = establishConnection("jdbc:sqlite:questions.db");
+    	createEmptyTable(DS);
+    	addMultipleChoice(DS, "What year was the very first model of the iphone released?",
     			"2007", "2005", "2007", "2008");
-    	addMultipleChoice(DataSource, "What is the shortcut to copy on most computers?", "ctrl c",
+    	addMultipleChoice(DS, "What is the shortcut to copy on most computers?", "ctrl c",
     			"alt c", "shift c", "ctrl c");
-    	addMultipleChoice(DataSource, "What does HTTP stand for?", "hypertext transfer protocol",
+    	addMultipleChoice(DS, "What does HTTP stand for?", "hypertext transfer protocol",
     			"hypertext transfer protocol", "hypertext transfer procedure", 
     			"hyper transmitter protocol");
-    	addMultipleChoice(DataSource, "Who is often called the father of the computer?", "Charles Babbage",
+    	addMultipleChoice(DS, "Who is often called the father of the computer?", "Charles Babbage",
     			"Alan Touring", "Charles Babbage", "James Gosling");
-    	addMultipleChoice(DataSource, "Who discovered Penacillin?", "Alexander Flemming",
+    	addMultipleChoice(DS, "Who discovered Penacillin?", "Alexander Flemming",
     			"Dr. Frankenstein", "Albert Einstein", "Alexander Flemming");
-    	addTrueFalse(DataSource, "Java is a type of OS.", "false");
-    	addShortAnswer(DataSource, "What is the symbol for potassium?", "K");
-    	ArrayList<Question> questions = createQuestionList(DataSource);
+    	addTrueFalse(DS, "Java is a type of OS.", "false");
+    	addShortAnswer(DS, "What is the symbol for potassium?", "K");
+    	ArrayList<Question> questions = createQuestionList(DS);
     	setMyQuestionList(questions);
     	//for (int i = 0; i < myQuestionList.size(); i++) {
     		//System.out.println(myQuestionList.get(i));
@@ -119,8 +119,6 @@ public class SQLDatabase {
             
             ResultSet rs = stmt.executeQuery(query);
             
-            //walk through each 'row' of results, grab data by column/field name
-            // and print it
             while ( rs.next() ) {
             	String type = rs.getString( "TYPE" );
                 String question = rs.getString( "QUESTION" );
