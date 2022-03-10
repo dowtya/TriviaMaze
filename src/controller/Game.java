@@ -6,6 +6,7 @@ import gui.Map;
 import gui.OptionBar;
 import gui.QuestionBox;
 import model.GameState;
+import model.SQLDatabase;
 
 public class Game {
 	
@@ -31,11 +32,11 @@ public class Game {
 		map = new Map(this);
 		
 		// create database
-		//SQLDatabase DB = new SQLDatabase();
-		//DB.setUp();
+		SQLDatabase DB = new SQLDatabase();
+		DB.setUp();
 		
 		// create questionbox
-		myQuestioncontroller = new QuestionController();
+		myQuestioncontroller = new QuestionController(DB.getMyQuestionList());
 		
 		// create optionbar
 		optionbar = new OptionBar();
