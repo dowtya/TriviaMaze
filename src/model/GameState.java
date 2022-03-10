@@ -30,7 +30,7 @@ public class GameState implements Serializable {
 		myYCoord = 0;
 		myQuestions = new QuestionState();
 		myDirection = Direction.NONE;
-		myPaths = new boolean[myMazeWidth][myMazeHeight];
+		myPaths = new boolean[myMazeWidth][(myMazeHeight)*2 - 1];
 	}
 	
 	
@@ -73,6 +73,14 @@ public class GameState implements Serializable {
 	
 	public void setYCoord(int theYCoord) {
 		myYCoord = theYCoord;
+	}
+	
+	public boolean getPathOpenBetweenRooms(final int theStartX, final int theStartY, final int theEndX, final int theEndY) {
+		return !myPaths[theEndX][theStartY * 2 + (theEndY-theStartY)];
+	}
+	
+	public boolean getPathOpenFromPlayer(final int theDeltaX, final int theDeltaY) {
+		return getPathOpenBetweenRooms(myXCoord, myYCoord, myXCoord + theDeltaX, myYCoord + theDeltaY);
 	}
 	
 	
