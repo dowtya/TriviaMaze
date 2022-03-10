@@ -1,6 +1,8 @@
 package gui;
 
 import javax.swing.JFrame;
+
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import controller.Game;
@@ -32,13 +34,16 @@ public class LaunchMenu {
 						frame.dispose();
 						return Void;
 					});
-					System.out.println(game.getQuestionBox());
-					frame.add(game.getQuestionBox());
+					
+					frame.setLayout(new GridLayout(1,2));
+					
 					frame.add(game.getMap());
+					frame.add(game.getQuestionBox());
+					
 					frame.revalidate();
 					frame.pack();
-					frame.setSize(400,500);//400 width and 500 height  
-					frame.setLayout(null);//using no layout managers  
+					frame.setSize(1000,500);//400 width and 500 height  
+					
 					frame.repaint();
 				});
 				frame.add(startButton);
