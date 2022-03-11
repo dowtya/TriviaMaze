@@ -106,17 +106,15 @@ public class Game {
 				gamestate.setYCoord(gamestate.getYCoord() - 1);
 			}
 			
-			if (gamestate.getXCoord() == gamestate.getMazeWidth() - 1 && gamestate.getYCoord() == gamestate.getMazeHeight() - 1) {
-				displayVictory();
-				displayGameOver();
+			if (gamestate.checkVictory()) {
+				
 			}
 			
 		} else {
 			gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord] = true; // block path in gamestate
 			
-			if (checkForBoxedIn() == true) {
-				displayFailure();
-				displayGameOver();
+			if (!gamestate.isPathAvailable(gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord])) {
+				
 			}
 		}
 		
@@ -125,21 +123,6 @@ public class Game {
 	}
 	
 	
-	
-	public void displayVictory() {
-		
-		System.out.println("You win!");
-	}
-	
-	public void displayFailure() {
-		System.out.println("You have lost, no more moves were found. Better luck next time!");
-	}
-	
-	
-	public void displayGameOver() {	
-		System.out.println("GAME OVER! \nThank you for playing our game, the game will now exit.");
-		System.exit(0);		
-	}
 	
 	//incomplete
 	public boolean checkForBoxedIn() {
