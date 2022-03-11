@@ -16,7 +16,7 @@ public class LaunchMenu {
 				JButton loadButton  = new JButton("Load");
 				JButton exitButton  = new JButton("Exit");
 				
-				JFrame frame = new JFrame("HelloWorldSwing");
+				JFrame frame = new JFrame("Epic Trivia Maze");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
 				Game game = new Game();

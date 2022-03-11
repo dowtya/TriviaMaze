@@ -90,4 +90,24 @@ public class GameState implements Serializable {
 		return avail;
 		
 	}
+	
+	public boolean checkVictory() {
+		boolean victory = false;
+		
+		if (myXCoord == myMazeWidth && myYCoord == myMazeHeight) {
+			victory = true;
+		}
+		
+		return victory;
+	}
+	
+	public boolean checkDefeat() {
+		boolean defeat = false;
+		
+		if (!isPathAvailable(myPaths)) {
+			defeat = true;
+		}
+		
+		return defeat;
+	}
 }
