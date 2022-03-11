@@ -34,7 +34,7 @@ public class QuestionController {
 		myQuestionBox.displaySingleChoiceQuestion(question, answers, (index) -> {
 			// evaluate if the answer at that index is correct
 			
-			if (myQuestionList.get(questionSelection).getMyChoice2().equals(correctAnswer)) {
+			if (answers[index].equals(correctAnswer)) {
 				
 				questionState.setAnsweredCorrectly(true);
 				
