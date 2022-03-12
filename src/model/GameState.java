@@ -84,30 +84,59 @@ public class GameState implements Serializable {
 	}
 	
 	
-	public boolean isPathAvailable(boolean thePath[][]) {
-		boolean avail = false;
-		
-		return avail;
-		
+	public boolean isPathAvailable(boolean thePath[][], int theXCoord, int theYCoord) {
+		boolean exists = false;
+		boolean[][] visited = new boolean[thePath.length][thePath[0].length];
+		for (int i = 0; i < thePath.length; i++) {
+			for (int j = 0; j < thePath[0].length; j++) {
+				if (i == theXCoord && j == theYCoord && !visited[i][j]) {
+					if(isPathHelper(thePath, i, j, visited)) {
+						exists = true;
+						break;
+					}
+				}
+			}
+		}
+		return exists;
 	}
 	
-	public boolean checkVictory() {
-		boolean victory = false;
-		
-		if (myXCoord == myMazeWidth && myYCoord == myMazeHeight) {
-			victory = true;
+	public static boolean isPathHelper(boolean[][] thePaths, int i, int j, boolean[][] theVisited) {
+		if (inBounds(i, j, thePaths) && !theVisited[i][j]) {
+			theVisited[i][j] = true;
+			
+			//go north
+			boolean north = isPathHelper(thePaths, i - 1, j, theVisited);
+			if (north) {
+				return true;
+			}
+			
+			//go west
+			boolean west = isPathHelper(thePaths, i, j - 1, theVisited);
+			if (west) {
+				return true;
+			}
+			
+			//go south
+			boolean south = isPathHelper(thePaths, i + 1, j, theVisited);
+			if (south) {
+				return true;
+			}
+			
+			//go east
+			boolean east = isPathHelper(thePaths, i, j + 1, theVisited);
+			if (east) {
+				return true;
+			}
 		}
-		
-		return victory;
+		return false;
 	}
 	
-	public boolean checkDefeat() {
-		boolean defeat = false;
-		
-		if (!isPathAvailable(myPaths)) {
-			defeat = true;
+	public static boolean inBounds(int theRow, int theCol, boolean[][] thePaths) {
+		if (theRow > 0 && theRow < thePaths.length 
+				&& theCol > 0 && theCol < thePaths[0].length) {
+			return true;
 		}
-		
-		return defeat;
+		return false;
 	}
+	
 }

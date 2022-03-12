@@ -105,15 +105,15 @@ public class Game {
 				//add +1 to row part of 2d array
 				gamestate.setYCoord(gamestate.getYCoord() - 1);
 			}
-			
+			/*
 			if (gamestate.checkVictory()) {
 				
 			}
-			
+			*/
 		} else {
 			gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord] = true; // block path in gamestate
 			
-			if (!gamestate.isPathAvailable(gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord])) {
+			if (!gamestate.isPathAvailable(gamestate.myPaths, gamestate.myXCoord, gamestate.myYCoord)) {
 				
 			}
 		}
