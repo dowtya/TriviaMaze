@@ -84,7 +84,7 @@ public class GameState implements Serializable {
 	}
 	
 	
-	public boolean isPathAvailable(boolean thePath[][], int theXCoord, int theYCoord) {
+	public static boolean isPathAvailable(boolean thePath[][], int theXCoord, int theYCoord) {
 		boolean exists = false;
 		boolean[][] visited = new boolean[thePath.length][thePath[0].length];
 		for (int i = 0; i < thePath.length; i++) {
@@ -104,6 +104,9 @@ public class GameState implements Serializable {
 		if (inBounds(i, j, thePaths) && !theVisited[i][j]) {
 			theVisited[i][j] = true;
 			
+			if (i == thePaths.length - 1 && j == thePaths[0].length - 1) {
+				return true;
+			}
 			//go north
 			boolean north = isPathHelper(thePaths, i - 1, j, theVisited);
 			if (north) {
@@ -132,11 +135,19 @@ public class GameState implements Serializable {
 	}
 	
 	public static boolean inBounds(int theRow, int theCol, boolean[][] thePaths) {
-		if (theRow > 0 && theRow < thePaths.length 
-				&& theCol > 0 && theCol < thePaths[0].length) {
+		if (theRow >= 0 && theRow < thePaths.length 
+				&& theCol >= 0 && theCol < thePaths[0].length) {
 			return true;
 		}
 		return false;
+	}
+	
+	public static void main(String[] theargs) {
+		boolean[][] temp = { {true, true, true},
+						 	 {false, false, true},
+						 	 {false, false, false} };
+		System.out.println(GameState.isPathAvailable(temp, 1, 1));
+		
 	}
 	
 }
