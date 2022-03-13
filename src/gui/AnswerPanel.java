@@ -28,13 +28,13 @@ public class AnswerPanel extends JPanel implements ActionListener {
 		this.setBorder(BorderFactory.createTitledBorder("Answers"));
 	}
 	
-	public void addSingleChoiceAnswers(final String[] answers, Function<Integer, Boolean> theEvalAnswerFunc, ActionListener theAnswerResultHandler) {
+	public void addSingleChoiceAnswers(final ArrayList<String> answers, Function<Integer, Boolean> theEvalAnswerFunc, ActionListener theAnswerResultHandler) {
 		myAnswerResultHandler = theAnswerResultHandler;
 		myEvalAnswerFunc = theEvalAnswerFunc;
 		
 		if (answers != null) {
-			for (int i = 0; i < answers.length; i++) {
-				final JButton button = new JButton(i + ") " + answers[i]);
+			for (int i = 0; i < answers.size(); i++) {
+				final JButton button = new JButton(i + ") " + answers.get(i));
 				mySingleChoiceButtons.add(button);
 				button.addActionListener(this);
 				this.add(button);

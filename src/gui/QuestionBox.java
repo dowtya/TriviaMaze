@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.function.Function;
 import javax.swing.*;
 
@@ -62,7 +63,7 @@ public class QuestionBox extends JPanel implements ActionListener {
 		}
 	}
 	
-	public void displaySingleChoiceQuestion(String question, String[] answers, Function<Integer, Boolean> evalAnswerFunc) {
+	public void displaySingleChoiceQuestion(String question, ArrayList<String> answers, Function<Integer, Boolean> evalAnswerFunc) {
 		questionPanel.setText(question);
 		answerPanel.addSingleChoiceAnswers(answers, evalAnswerFunc, this);
 		

@@ -11,6 +11,7 @@ public class QuestionController {
 	
 	QuestionBox myQuestionBox;
 	private ArrayList<Question> myQuestionList;
+	private ArrayList<String> myAnswers;
 	
 	QuestionController(ArrayList<Question> theQuestionList) {
 		myQuestionBox = new QuestionBox();
@@ -21,20 +22,35 @@ public class QuestionController {
 		Random r = new Random();
 		int questionSelection = r.nextInt(myQuestionList.size());
 		String question = myQuestionList.get(questionSelection).getMyQuestion();
+		String questionType = myQuestionList.get(questionSelection).getMyType();
 		String correctAnswer = myQuestionList.get(questionSelection).getMyAnswer();
+		myAnswers = new ArrayList<String>();
 		
-		String[] answers = {myQuestionList.get(questionSelection).getMyChoice1(),
-							myQuestionList.get(questionSelection).getMyChoice2(),
-							myQuestionList.get(questionSelection).getMyChoice3()};
+		if (questionType.equalsIgnoreCase("Multiple Choice")) {
+			
+			myAnswers.add(myQuestionList.get(questionSelection).getMyChoice1());
+			myAnswers.add(myQuestionList.get(questionSelection).getMyChoice2());
+			myAnswers.add(myQuestionList.get(questionSelection).getMyChoice3());
+			
+		} else if (questionType.equalsIgnoreCase("True/False")) {
+			
+			myAnswers.add(myQuestionList.get(questionSelection).getMyChoice1());
+			myAnswers.add(myQuestionList.get(questionSelection).getMyChoice2());
+			
+		}
+		
+//		String[] answers = {myQuestionList.get(questionSelection).getMyChoice1(),
+//							myQuestionList.get(questionSelection).getMyChoice2(),
+//							myQuestionList.get(questionSelection).getMyChoice3()};
 		
 		
 		//TODO: determine question and answers
 		
 		//
-		myQuestionBox.displaySingleChoiceQuestion(question, answers, (index) -> {
+		myQuestionBox.displaySingleChoiceQuestion(question, myAnswers, (index) -> {
 			// evaluate if the answer at that index is correct
 			
-			if (answers[index].equals(correctAnswer)) {
+			if (myAnswers.get(index).equals(correctAnswer)) {
 				
 				questionState.setAnsweredCorrectly(true);
 				
