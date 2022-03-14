@@ -54,10 +54,12 @@ public class Map extends JPanel {
 			//JOptionPane popUp = new JOptionPane();
 			//this.add(popUp);
 			JOptionPane.showMessageDialog(this.getRootPane(), "You Lose!");
+			myGame.myExitRoutine.apply(null);
 		}
 		
 		if(myGame.getGameState().checkVictory()) {
 			JOptionPane.showMessageDialog(this.getRootPane(), "You Win!");
+			myGame.myExitRoutine.apply(null);
 		}
 	}
 	

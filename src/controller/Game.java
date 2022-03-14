@@ -16,7 +16,9 @@ public class Game {
 	private QuestionController myQuestioncontroller;
 	OptionBar optionbar;
 	
-	public void start(String filename, Function<Void,Void> exitRoutine) {
+	public Function<Void,Void> myExitRoutine;
+	
+	public void start(String filename, Function<Void,Void> theExitRoutine) {
 	/**
 	 * Problems atm, Need to work on this on sunday, I think it would just be a way to open up
 	 * and search for a file to read, but I don't have much experience with loading files at all
@@ -30,6 +32,8 @@ public class Game {
 		
 		// create map
 		map = new Map(this);
+		
+		myExitRoutine = theExitRoutine;
 		
 		// create database
 		SQLDatabase DB = new SQLDatabase();
