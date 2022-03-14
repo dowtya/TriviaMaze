@@ -113,21 +113,17 @@ public class Game {
 		} else {
 			//gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord] = true; // block path in gamestate
 			if (gamestate.getDirection() == GameState.Direction.EAST) {
-				//gamestate.setXCoord(gamestate.myXCoord + 1);
-				gamestate.myPaths[gamestate.myXCoord + 1][gamestate.myYCoord] = true;
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord() + 1, gamestate.getYCoord(), true);
 			}
 			if (gamestate.getDirection() == GameState.Direction.SOUTH) {
-				//gamestate.setYCoord(gamestate.getYCoord() + 1);
-				gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord + 1] = true;
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord(), gamestate.getYCoord() + 1, true);
 			}
 			if (gamestate.getDirection() == GameState.Direction.WEST) {
-				//gamestate.setXCoord(gamestate.myXCoord - 1);
-				gamestate.myPaths[gamestate.myXCoord - 1][gamestate.myYCoord] = true;
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord() - 1, gamestate.getYCoord(), true);
 			}
 			
 			if (gamestate.getDirection() == GameState.Direction.NORTH) {
-				//gamestate.setYCoord(gamestate.getYCoord() - 1);
-				gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord - 1] = true;
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord(), gamestate.getYCoord() - 1, true);
 			}
 		}
 		
