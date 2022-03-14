@@ -49,19 +49,36 @@ public class QuestionController {
 		//TODO: determine question and answers
 		
 		//
-		myQuestionBox.displaySingleChoiceQuestion(question, myAnswers, (index) -> {
-			// evaluate if the answer at that index is correct
+		if (questionType.equalsIgnoreCase("Short Answer")) {
+			myQuestionBox.displayShortAnswerQuestion(question, (answer) -> {
+				// evaluate if the answer at that index is correct
+				
+				if (answer.equalsIgnoreCase(correctAnswer)) {
+					
+					questionState.setAnsweredCorrectly(true);
+					
+				} else {
+					
+					questionState.setAnsweredCorrectly(false);
+				}
+				return questionState.isAnsweredCorrectly();
+			});
+		} else {
+			myQuestionBox.displaySingleChoiceQuestion(question, myAnswers, (index) -> {
+				// evaluate if the answer at that index is correct
+				
+				if (myAnswers.get(index).equals(correctAnswer)) {
+					
+					questionState.setAnsweredCorrectly(true);
+					
+				} else {
+					
+					questionState.setAnsweredCorrectly(false);
+				}
+				return questionState.isAnsweredCorrectly();
+			});
 			
-			if (myAnswers.get(index).equals(correctAnswer)) {
-				
-				questionState.setAnsweredCorrectly(true);
-				
-			} else {
-				
-				questionState.setAnsweredCorrectly(false);
-			}
-			return questionState.isAnsweredCorrectly();
-		});
+		}
 		
 		
 		// display current question

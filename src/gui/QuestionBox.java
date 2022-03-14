@@ -89,6 +89,14 @@ public class QuestionBox extends JPanel implements ActionListener {
 		}
 	}
 	
+	public void displayShortAnswerQuestion(String question, Function<String, Boolean> evalAnswerFunc) {
+		reset();
+		questionPanel.setText(question);
+		answerPanel.addShortAnswer(evalAnswerFunc, this);
+		questionPanel.repaint();
+		answerPanel.repaint();
+	}
+	
 	public void displaySingleChoiceQuestion(String question, ArrayList<String> answers, Function<Integer, Boolean> evalAnswerFunc) {
 		reset();
 		questionPanel.setText(question);
