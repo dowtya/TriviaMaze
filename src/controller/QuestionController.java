@@ -60,7 +60,6 @@ public class QuestionController {
 				
 				questionState.setAnsweredCorrectly(false);
 			}
-			
 			return questionState.isAnsweredCorrectly();
 		});
 		
@@ -71,7 +70,7 @@ public class QuestionController {
 		// wait for user to select an answer
 		// validate whether question was answered correctly
 		// update questionstate
-		
+		myQuestionList.remove(questionSelection);
 		return questionState;
 	}
 }

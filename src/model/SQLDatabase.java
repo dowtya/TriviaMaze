@@ -50,6 +50,7 @@ public class SQLDatabase {
     	addTrueFalse(DS, "The creator of the Game Boy was a janitor at Nintendo.", "true");
     	addTrueFalse(DS, "Marios dinosaur sidekick is named bowser.", "false");
     	addTrueFalse(DS, "Motion sickness plagues up to 40% of virtual reality users", "true");
+    	/*
     	addShortAnswer(DS, "What was the first commercially successful video game?", "pong");
     	addShortAnswer(DS, "Which Nintendo system first had a 007 video game?", "nintendo 64");
     	addShortAnswer(DS, "What is the name of Crash Bandicoots sister?", "naughty dog");
@@ -60,6 +61,7 @@ public class SQLDatabase {
     	addShortAnswer(DS, "GTA stands for what?", "grand theft auto");
     	addShortAnswer(DS, "In the game ‘Fortnight Battle Royale’, how many players can play simultaneously in competition?", "100");
     	addShortAnswer(DS, "The famous video game heroin Lara Croft belonged to which game?", "tomb raider");
+    	*/
     	ArrayList<Question> questions = createQuestionList(DS);
     	setMyQuestionList(questions);
     	for (int i = 0; i < myQuestionList.size(); i++) {

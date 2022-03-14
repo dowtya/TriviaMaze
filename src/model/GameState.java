@@ -80,6 +80,7 @@ public class GameState implements Serializable {
 		System.out.println(theStartY);
 		System.out.println(theEndX);
 		System.out.println(theEndY);
+		//something wrong here. Needs to check for bounds.
 		return !myPaths[theEndX][theStartY * 2 + (theEndY-theStartY)];
 	}
 	
@@ -156,7 +157,7 @@ public class GameState implements Serializable {
 	public boolean checkVictory() {
 		boolean victory = false;
 		
-		if (myXCoord == myMazeWidth && myYCoord == myMazeHeight) {
+		if (myXCoord == myMazeWidth - 1 && myYCoord == myMazeHeight - 1) {
 			victory = true;
 		}
 		return victory;
