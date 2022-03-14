@@ -64,9 +64,6 @@ public class SQLDatabase {
     	*/
     	ArrayList<Question> questions = createQuestionList(DS);
     	setMyQuestionList(questions);
-    	for (int i = 0; i < myQuestionList.size(); i++) {
-    		System.out.println(myQuestionList.get(i));
-    	}
     }
     
     public static SQLiteDataSource establishConnection(String theURL) {

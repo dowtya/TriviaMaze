@@ -76,12 +76,16 @@ public class GameState implements Serializable {
 	}
 	
 	public boolean getPathOpenBetweenRooms(final int theStartX, final int theStartY, final int theEndX, final int theEndY) {
+		boolean path = false;
 		System.out.println(theStartX);
 		System.out.println(theStartY);
 		System.out.println(theEndX);
 		System.out.println(theEndY);
 		//something wrong here. Needs to check for bounds.
-		return !myPaths[theEndX][theStartY * 2 + (theEndY-theStartY)];
+		if (inBounds(theEndX, theStartY * 2 + (theEndY-theStartY), myPaths)) {
+			path = !myPaths[theEndX][theStartY * 2 + (theEndY-theStartY)];
+		}
+		return path;
 	}
 	
 	public boolean getPathOpenFromPlayer(final int theDeltaX, final int theDeltaY) {
