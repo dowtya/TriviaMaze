@@ -76,21 +76,31 @@ public class GameState implements Serializable {
 	}
 	
 	public boolean getPathOpenBetweenRooms(final int theStartX, final int theStartY, final int theEndX, final int theEndY) {
+		System.out.println(theStartX);
+		System.out.println(theStartY);
+		System.out.println(theEndX);
+		System.out.println(theEndY);
 		return !myPaths[theEndX][theStartY * 2 + (theEndY-theStartY)];
 	}
 	
 	public boolean getPathOpenFromPlayer(final int theDeltaX, final int theDeltaY) {
+		if(myXCoord == 0 && theDeltaX < 0) {
+			System.out.println("x to small");
+		}
+		if(myYCoord == 0 && theDeltaY < 0) {
+			System.out.println("y to small");
+		}
 		return getPathOpenBetweenRooms(myXCoord, myYCoord, myXCoord + theDeltaX, myYCoord + theDeltaY);
 	}
 	
 	
-	public static boolean isPathAvailable(boolean thePath[][], int theXCoord, int theYCoord) {
+	public boolean isPathAvailable() {
 		boolean exists = false;
-		boolean[][] visited = new boolean[thePath.length][thePath[0].length];
-		for (int i = 0; i < thePath.length; i++) {
-			for (int j = 0; j < thePath[0].length; j++) {
-				if (i == theXCoord && j == theYCoord && !visited[i][j]) {
-					if(isPathHelper(thePath, i, j, visited)) {
+		boolean[][] visited = new boolean[myPaths.length][myPaths[0].length];
+		for (int i = 0; i < myPaths.length; i++) {
+			for (int j = 0; j < myPaths[0].length; j++) {
+				if (i == myXCoord && j == myYCoord && !visited[i][j]) {
+					if(isPathHelper(myPaths, i, j, visited)) {
 						exists = true;
 						break;
 					}
@@ -155,7 +165,7 @@ public class GameState implements Serializable {
 	public boolean checkDefeat() {
 		boolean defeat = false;
 		
-		if (!isPathAvailable(myPaths, myXCoord, myYCoord)) {
+		if (!isPathAvailable()) {
 			defeat = true;
 		}
 		return defeat;

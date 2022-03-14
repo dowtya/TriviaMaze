@@ -9,12 +9,14 @@ import gui.QuestionBox;
 
 public class QuestionController {
 	
+	Game myGame;
 	QuestionBox myQuestionBox;
 	private ArrayList<Question> myQuestionList;
-	private ArrayList<String> myAnswers;
+	//private  myAnswers;
 	
-	QuestionController(ArrayList<Question> theQuestionList) {
-		myQuestionBox = new QuestionBox();
+	QuestionController(ArrayList<Question> theQuestionList, Game theGame) {
+		myGame = theGame;
+		myQuestionBox = new QuestionBox(myGame);
 		myQuestionList = theQuestionList;
 	}
 	
@@ -24,7 +26,7 @@ public class QuestionController {
 		String question = myQuestionList.get(questionSelection).getMyQuestion();
 		String questionType = myQuestionList.get(questionSelection).getMyType();
 		String correctAnswer = myQuestionList.get(questionSelection).getMyAnswer();
-		myAnswers = new ArrayList<String>();
+		ArrayList<String> myAnswers = new ArrayList<String>();
 		
 		if (questionType.equalsIgnoreCase("Multiple Choice")) {
 			

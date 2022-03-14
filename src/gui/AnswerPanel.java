@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -40,6 +39,14 @@ public class AnswerPanel extends JPanel implements ActionListener {
 				this.add(button);
 			}
 		}
+	}
+	
+	public void reset() {
+		mySingleChoiceButtons.clear();
+		this.removeAll();
+		myEvalAnswerFunc = null;
+		myAnswerResultHandler = null;
+		this.repaint();
 	}
 	
 	public void actionPerformed(ActionEvent e) {	

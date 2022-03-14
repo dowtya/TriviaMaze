@@ -1,16 +1,16 @@
 package gui;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import controller.Game;
 import model.GameState;
+
+import javax.swing.JOptionPane;
 
 public class Map extends JPanel {
 	
@@ -50,14 +50,39 @@ public class Map extends JPanel {
 	// display the current map
 	public void updateVisuals() {
 		
+		if(myGame.getGameState().checkDefeat()) {
+			//JOptionPane popUp = new JOptionPane();
+			//this.add(popUp);
+			JOptionPane.showMessageDialog(this.getRootPane(), "You Lose!");
+		}
 		
+		if(myGame.getGameState().checkVictory()) {
+			JOptionPane.showMessageDialog(this.getRootPane(), "You Win!");
+		}
 	}
 	
+	
+	private void resetButtons() {
+		for (int y = 0; y < myGame.getGameState().getMazeHeight(); y++) {
+			for (int x = 0; x < myGame.getGameState().getMazeWidth(); x++) {
+				roomButtons[x][y].setEnabled(false);
+			}
+		}
+	}
 	
 	// create clickable arrows to move the player; call callback with the direction selected.
 	public void getPlayerMovement() {
 		
+		System.out.println("Performing PlayerMovement()");
+		System.out.println(myGame.getGameState().myXCoord);
+		System.out.println(myGame.getGameState().myYCoord);
+		
 		JButton northButton = null;
+		JButton southButton = null;
+		JButton eastButton = null;
+		JButton westButton = null;
+		
+		
 		if(myGame.getGameState().myYCoord > 0) {
 			// check if door is open
 			if(myGame.getGameState().getPathOpenFromPlayer(0, -1)) {
@@ -67,6 +92,7 @@ public class Map extends JPanel {
 				northButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						myGame.getGameState().setDirection(GameState.Direction.NORTH);
+						resetButtons();
 						myGame.handleMovementResolution();
 					}
 				});
@@ -74,7 +100,6 @@ public class Map extends JPanel {
 			
 		}
 		
-		JButton southButton = null;
 		if(myGame.getGameState().myYCoord < myGame.getGameState().getMazeHeight()) {
 			if(myGame.getGameState().getPathOpenFromPlayer(0, 1)) {
 				southButton = roomButtons[myGame.getGameState().myXCoord][myGame.getGameState().myYCoord + 1];
@@ -82,34 +107,35 @@ public class Map extends JPanel {
 				southButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						myGame.getGameState().setDirection(GameState.Direction.SOUTH);
+						resetButtons();
 						myGame.handleMovementResolution();
 					}
 				});
 			}
 		}
 		
-		JButton eastButton = null;
-		if(myGame.getGameState().myYCoord > 0) {
+		if(myGame.getGameState().myXCoord > 0) {
 			if(myGame.getGameState().getPathOpenFromPlayer(-1, 0)) {
 				eastButton = roomButtons[myGame.getGameState().myXCoord - 1][myGame.getGameState().myYCoord];
 				eastButton.setEnabled(true);
 				eastButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						myGame.getGameState().setDirection(GameState.Direction.EAST);
+						myGame.getGameState().setDirection(GameState.Direction.WEST);
+						resetButtons();
 						myGame.handleMovementResolution();
 					}
 				});
 			}
 		}
 		
-		JButton westButton = null;
 		if(myGame.getGameState().myXCoord < myGame.getGameState().getMazeWidth()) {
 			if(myGame.getGameState().getPathOpenFromPlayer(1, 0)) {
 				westButton = roomButtons[myGame.getGameState().myXCoord + 1][myGame.getGameState().myYCoord];
 				westButton.setEnabled(true);
 				westButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						myGame.getGameState().setDirection(GameState.Direction.WEST);
+						myGame.getGameState().setDirection(GameState.Direction.EAST);
+						resetButtons();
 						myGame.handleMovementResolution();
 					}
 				});

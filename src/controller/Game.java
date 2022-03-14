@@ -36,7 +36,7 @@ public class Game {
 		DB.setUp();
 		
 		// create questionbox
-		myQuestioncontroller = new QuestionController(DB.getMyQuestionList());
+		myQuestioncontroller = new QuestionController(DB.getMyQuestionList(), this);
 		
 		// create optionbar
 		optionbar = new OptionBar();
@@ -113,7 +113,7 @@ public class Game {
 		} else {
 			gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord] = true; // block path in gamestate
 			
-			if (!gamestate.isPathAvailable(gamestate.myPaths, gamestate.myXCoord, gamestate.myYCoord)) {
+			if (!gamestate.isPathAvailable()) {
 				
 			}
 		}
