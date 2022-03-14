@@ -35,10 +35,10 @@ public class SQLDatabase {
     			"ubisoft", "fromSoftware", "electronic arts");
     	addMultipleChoice(DS, "In which game do players compete in the future version of soccer with cars?", "rocket league",
     			"fifa", "mario kart", "rocket league");
-    	addMultipleChoice(DS, "What was Mario's first job?", "carpenter", "plumber", "carpenter", "electrician");
+    	addMultipleChoice(DS, "What was Marios first job?", "carpenter", "plumber", "carpenter", "electrician");
     	addMultipleChoice(DS, "What year was the first Call of Duty game released?", "2003", "2000",
     			"2007", "2003");
-    	addMultipleChoice(DS, "What's the best selling video game of all time?", "minecraft", "super smash bros",
+    	addMultipleChoice(DS, "Whats the best selling video game of all time?", "minecraft", "super smash bros",
     			"minecraft", "halo 2");
     	addTrueFalse(DS, "The final course in all of the mario kart games is rainbow road.", "true");
     	addTrueFalse(DS, "The first nintendo console to use optical disks was the Wii.", "false");
@@ -48,24 +48,23 @@ public class SQLDatabase {
     	addTrueFalse(DS, "The first virtual reality headset was created in 1995.", "true");
     	addTrueFalse(DS, "Nintendo released the first flight simulator game.", "false");
     	addTrueFalse(DS, "The creator of the Game Boy was a janitor at Nintendo.", "true");
-    	addTrueFalse(DS, "Mario's dinosaur sidekick is named bowser.", "false");
+    	addTrueFalse(DS, "Marios dinosaur sidekick is named bowser.", "false");
     	addTrueFalse(DS, "Motion sickness plagues up to 40% of virtual reality users", "true");
     	addShortAnswer(DS, "What was the first commercially successful video game?", "pong");
     	addShortAnswer(DS, "Which Nintendo system first had a 007 video game?", "nintendo 64");
-    	addShortAnswer(DS, "What is the name of Crash Bandicoot's sister?", "naughty dog");
+    	addShortAnswer(DS, "What is the name of Crash Bandicoots sister?", "naughty dog");
     	addShortAnswer(DS, "What computer video game allowed you to play real life simulation in the 1990s?", "the sims");
     	addShortAnswer(DS, "What Mortal Kombat character was based on a ninja?", "sub zero");
     	addShortAnswer(DS, "Duke Nukem was a video game created by which game developer?", "apogee");
     	addShortAnswer(DS, "What was the most popular arcade video game in the 1980s?", "pac man");
     	addShortAnswer(DS, "GTA stands for what?", "grand theft auto");
-    	addShortAnswer(DS, "In the game ‘Fortnight Battle Royale’, how many players can play simultaneously in competition?",
-    			"100");
+    	addShortAnswer(DS, "In the game ‘Fortnight Battle Royale’, how many players can play simultaneously in competition?", "100");
     	addShortAnswer(DS, "The famous video game heroin Lara Croft belonged to which game?", "tomb raider");
     	ArrayList<Question> questions = createQuestionList(DS);
     	setMyQuestionList(questions);
-    	//for (int i = 0; i < myQuestionList.size(); i++) {
-    		//System.out.println(myQuestionList.get(i));
-    	//}
+    	for (int i = 0; i < myQuestionList.size(); i++) {
+    		System.out.println(myQuestionList.get(i));
+    	}
     }
     
     public static SQLiteDataSource establishConnection(String theURL) {
@@ -172,4 +171,8 @@ public class SQLDatabase {
     	myQuestionList = theQuestionList;
     }
     
+    public static void main(String[] args) {
+    	SQLDatabase d = new SQLDatabase();
+    	d.setUp();
+    }
 }
