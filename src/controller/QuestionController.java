@@ -77,7 +77,6 @@ public class QuestionController {
 				}
 				return questionState.isAnsweredCorrectly();
 			});
-			
 		}
 		
 		

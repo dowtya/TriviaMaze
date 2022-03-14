@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -49,10 +50,13 @@ public class AnswerPanel extends JPanel implements ActionListener {
 		myAnswerResultHandler = theAnswerResultHandler;
 		myEvalStringAnswerFunc = theEvalStringAnswerFunc;
 		myShortAnswerTextField = new JTextField();
+		myShortAnswerTextField.setBounds(0, 0, 200, 20);
 		myShortAnswerSubmitButton = new JButton();
 		myShortAnswerSubmitButton.setText("Submit");
+		myShortAnswerSubmitButton.addActionListener(this);
 		this.add(myShortAnswerTextField);
 		this.add(myShortAnswerSubmitButton);
+		this.setLayout(new GridLayout(2, 1));
 	}
 	
 	public void reset() {
@@ -78,8 +82,8 @@ public class AnswerPanel extends JPanel implements ActionListener {
 			JButton button = (JButton) e.getSource();
 			
 			// Color the button depending on if the answer was correct
-            boolean wasCorrect = myEvalChoiceAnswerFunc.apply(buttonIndex);
-            if (wasCorrect) {
+           isCorrect = myEvalChoiceAnswerFunc.apply(buttonIndex);
+            if (isCorrect) {
             	button.setBackground(Color.GREEN);
             } else {
             	button.setBackground(Color.RED);
@@ -91,6 +95,8 @@ public class AnswerPanel extends JPanel implements ActionListener {
             // Clear the answer panel after 1 second
             new Timer(1000, this).start();
 		} else if (e.getSource() == myShortAnswerSubmitButton) {
+			isCorrect = myEvalStringAnswerFunc.apply(myShortAnswerTextField.getText());
+			e.setSource(this);
 			myAnswerResultHandler.actionPerformed(e);
 		}
 	}
