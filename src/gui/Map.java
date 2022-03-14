@@ -118,9 +118,9 @@ public class Map extends JPanel {
 		
 		if(myGame.getGameState().myXCoord > 0) {
 			if(myGame.getGameState().getPathOpenFromPlayer(-1, 0)) {
-				eastButton = roomButtons[myGame.getGameState().myXCoord - 1][myGame.getGameState().myYCoord];
-				eastButton.setEnabled(true);
-				eastButton.addActionListener(new ActionListener() {
+				westButton = roomButtons[myGame.getGameState().myXCoord - 1][myGame.getGameState().myYCoord];
+				westButton.setEnabled(true);
+				westButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						myGame.getGameState().setDirection(GameState.Direction.WEST);
 						resetButtons();
@@ -132,9 +132,9 @@ public class Map extends JPanel {
 		
 		if(myGame.getGameState().myXCoord < myGame.getGameState().getMazeWidth()) {
 			if(myGame.getGameState().getPathOpenFromPlayer(1, 0)) {
-				westButton = roomButtons[myGame.getGameState().myXCoord + 1][myGame.getGameState().myYCoord];
-				westButton.setEnabled(true);
-				westButton.addActionListener(new ActionListener() {
+				eastButton = roomButtons[myGame.getGameState().myXCoord + 1][myGame.getGameState().myYCoord];
+				eastButton.setEnabled(true);
+				eastButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						myGame.getGameState().setDirection(GameState.Direction.EAST);
 						resetButtons();

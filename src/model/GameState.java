@@ -76,25 +76,64 @@ public class GameState implements Serializable {
 	}
 	
 	public boolean getPathOpenBetweenRooms(final int theStartX, final int theStartY, final int theEndX, final int theEndY) {
+		int tempX = theStartX;
+		int tempY = theStartY;
+		if (theEndX > tempX) {
+			tempX = theEndX;
+		}
+		if (theEndY > tempY) {
+			tempY = theEndY;
+		}
+		int pathX = 0;
+		int pathY = 0;
+		if (theEndX == theStartX) {
+			pathX = tempX;
+			pathY = tempY * 2 - 1;
+		} else {
+			pathX = tempX - 1;
+			pathY = tempY * 2;
+		}
 		boolean path = false;
 		System.out.println(theStartX);
 		System.out.println(theStartY);
 		System.out.println(theEndX);
 		System.out.println(theEndY);
 		//something wrong here. Needs to check for bounds.
-		if (inBounds(theEndX, theStartY * 2 + (theEndY-theStartY), myPaths)) {
-			path = !myPaths[theEndX][theStartY * 2 + (theEndY-theStartY)];
+		if (inBounds(pathX, pathY, myPaths)) {
+			path = !myPaths[pathX][pathY];
 		}
 		return path;
 	}
 	
+	public void setPathOpenBetweenRooms(final int theStartX, final int theStartY, final int theEndX, final int theEndY, boolean thePath) {
+		int tempX = theStartX;
+		int tempY = theStartY;
+		if (theEndX > tempX) {
+			tempX = theEndX;
+		}
+		if (theEndY > tempY) {
+			tempY = theEndY;
+		}
+		int pathX = 0;
+		int pathY = 0;
+		if (theEndX == theStartX) {
+			pathX = tempX;
+			pathY = tempY * 2 - 1;
+		} else {
+			pathX = tempX - 1;
+			pathY = tempY * 2;
+		}
+		System.out.println(theStartX);
+		System.out.println(theStartY);
+		System.out.println(theEndX);
+		System.out.println(theEndY);
+		//something wrong here. Needs to check for bounds.
+		if (inBounds(pathX, pathY, myPaths)) {
+			myPaths[pathX][pathY] = thePath;
+		}
+	}
+	
 	public boolean getPathOpenFromPlayer(final int theDeltaX, final int theDeltaY) {
-		if(myXCoord == 0 && theDeltaX < 0) {
-			System.out.println("x to small");
-		}
-		if(myYCoord == 0 && theDeltaY < 0) {
-			System.out.println("y to small");
-		}
 		return getPathOpenBetweenRooms(myXCoord, myYCoord, myXCoord + theDeltaX, myYCoord + theDeltaY);
 	}
 	
@@ -105,7 +144,7 @@ public class GameState implements Serializable {
 		for (int i = 0; i < myPaths.length; i++) {
 			for (int j = 0; j < myPaths[0].length; j++) {
 				if (i == myXCoord && j == myYCoord && !visited[i][j]) {
-					if(isPathHelper(myPaths, i, j, visited)) {
+					if(isPathHelper(i, j, visited)) {
 						exists = true;
 						break;
 					}
@@ -115,34 +154,34 @@ public class GameState implements Serializable {
 		return exists;
 	}
 	
-	public static boolean isPathHelper(boolean[][] thePaths, int i, int j, boolean[][] theVisited) {
-		if (inBounds(i, j, thePaths) && thePaths[i][j] != true && !theVisited[i][j]) {
+	private boolean isPathHelper(int i, int j, boolean[][] theVisited) {
+		if (inBounds(i, j, myPaths) && myPaths[i][j] != true && !theVisited[i][j]) {
 			
 			theVisited[i][j] = true;
 			
-			if (i == thePaths.length - 1 && j == thePaths[0].length - 1) {
+			if (i == myPaths.length - 1 && j == myPaths[0].length - 1) {
 				return true;
 			}
 			//go north
-			boolean north = isPathHelper(thePaths, i - 1, j, theVisited);
+			boolean north = isPathHelper(i - 1, j, theVisited);
 			if (north) {
 				return true;
 			}
 			
 			//go west
-			boolean west = isPathHelper(thePaths, i, j - 1, theVisited);
+			boolean west = isPathHelper(i, j - 1, theVisited);
 			if (west) {
 				return true;
 			}
 			
 			//go south
-			boolean south = isPathHelper(thePaths, i + 1, j, theVisited);
+			boolean south = isPathHelper(i + 1, j, theVisited);
 			if (south) {
 				return true;
 			}
 			
 			//go east
-			boolean east = isPathHelper(thePaths, i, j + 1, theVisited);
+			boolean east = isPathHelper(i, j + 1, theVisited);
 			if (east) {
 				return true;
 			}
@@ -150,7 +189,7 @@ public class GameState implements Serializable {
 		return false;
 	}
 	
-	public static boolean inBounds(int theRow, int theCol, boolean[][] thePaths) {
+	private boolean inBounds(int theRow, int theCol, boolean[][] thePaths) {
 		if (theRow >= 0 && theRow < thePaths.length 
 				&& theCol >= 0 && theCol < thePaths[0].length) {
 			return true;
