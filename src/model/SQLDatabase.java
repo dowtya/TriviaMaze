@@ -64,6 +64,8 @@ public class SQLDatabase {
     	
     	ArrayList<Question> questions = createQuestionList(DS);
     	setMyQuestionList(questions);
+    	deleteTable(DS);
+    	
     }
     
     public static SQLiteDataSource establishConnection(String theURL) {
@@ -80,7 +82,7 @@ public class SQLDatabase {
         return ds;
     }
     
-    public static void createEmptyTable(SQLiteDataSource theDS) {
+    private void createEmptyTable(SQLiteDataSource theDS) {
         String query = "CREATE TABLE IF NOT EXISTS questions ( " +
                 "TYPE TEXT NOT NULL, " +
         		"QUESTION TEXT NOT NULL, " +
@@ -97,7 +99,18 @@ public class SQLDatabase {
           }
     }
     
-    public static void addMultipleChoice(SQLiteDataSource theDS, String theQuestion, 
+    private void deleteTable(SQLiteDataSource theDS) {
+        String query = "DROP TABLE IF EXISTS questions";
+        try ( Connection conn = theDS.getConnection();
+                Statement stmt = conn.createStatement(); ) {
+                stmt.executeUpdate( query );
+          } catch ( SQLException e ) {
+              e.printStackTrace();
+              System.exit( 0 );
+          }
+    }
+    
+    private void addMultipleChoice(SQLiteDataSource theDS, String theQuestion, 
     		String theAnswer, String theChoice1, String theChoice2, String theChoice3) {
     	String query = "INSERT INTO questions ( TYPE, QUESTION, ANSWER, CHOICE1, CHOICE2, CHOICE3 ) VALUES ( 'multiple choice', '" +
     		theQuestion + "', '" + theAnswer + "', '" + theChoice1 + "', '" + theChoice2 + "', '" + 
@@ -111,7 +124,7 @@ public class SQLDatabase {
           }
     }
     
-    public static void addTrueFalse(SQLiteDataSource theDS, String theQuestion, String theAnswer) {
+    private void addTrueFalse(SQLiteDataSource theDS, String theQuestion, String theAnswer) {
     	String query = "INSERT INTO questions ( TYPE, QUESTION, ANSWER, CHOICE1, CHOICE2 ) VALUES ( 'True/False', '" +
         		theQuestion + "', '" + theAnswer + "', 'true', 'false' )";
             try ( Connection conn = theDS.getConnection();
@@ -123,7 +136,7 @@ public class SQLDatabase {
               }
     }
     
-    public static void addShortAnswer(SQLiteDataSource theDS, String theQuestion, String theAnswer) {
+    private void addShortAnswer(SQLiteDataSource theDS, String theQuestion, String theAnswer) {
     	String query = "INSERT INTO questions ( TYPE, QUESTION, ANSWER ) VALUES ( 'Short Answer', '" +
         		theQuestion + "', '" + theAnswer + "' )";
             try ( Connection conn = theDS.getConnection();
@@ -135,7 +148,7 @@ public class SQLDatabase {
               }
     }
     
-    public static ArrayList<Question> createQuestionList(SQLiteDataSource theDS) {
+    private ArrayList<Question> createQuestionList(SQLiteDataSource theDS) {
     	ArrayList<Question> result = new ArrayList<Question>(); 
         String query = "SELECT * FROM questions";
 
@@ -166,7 +179,7 @@ public class SQLDatabase {
     	return myQuestionList;
     }
     
-    public void setMyQuestionList(ArrayList<Question> theQuestionList) {
+    private void setMyQuestionList(ArrayList<Question> theQuestionList) {
     	myQuestionList = theQuestionList;
     }
     
