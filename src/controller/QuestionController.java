@@ -51,6 +51,7 @@ public class QuestionController {
 		//
 		if (questionType.equalsIgnoreCase("Short Answer")) {
 			myQuestionBox.displayShortAnswerQuestion(question, (answer) -> {
+				System.out.println(correctAnswer);
 				// evaluate if the answer at that index is correct
 				
 				if (answer.equalsIgnoreCase(correctAnswer)) {

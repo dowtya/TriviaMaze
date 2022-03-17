@@ -95,44 +95,33 @@ public class Game {
 		if (gamestate.getQuestionState().isAnsweredCorrectly()) {
 			
 			if (gamestate.getDirection() == GameState.Direction.EAST) {
-				gamestate.setXCoord(gamestate.myXCoord + 1);
-			}
-			if (gamestate.getDirection() == GameState.Direction.SOUTH) {
-				//add +1 to row part of 2d array
+				gamestate.setXCoord(gamestate.getXCoord() + 1);
+			} else if (gamestate.getDirection() == GameState.Direction.SOUTH) {
 				gamestate.setYCoord(gamestate.getYCoord() + 1);
-			}
-			if (gamestate.getDirection() == GameState.Direction.WEST) {
-				gamestate.setXCoord(gamestate.myXCoord - 1);
-			}
-			
-			if (gamestate.getDirection() == GameState.Direction.NORTH) {
-				//add +1 to row part of 2d array
+			} else if (gamestate.getDirection() == GameState.Direction.WEST) {
+				gamestate.setXCoord(gamestate.getXCoord() - 1);
+			} else if (gamestate.getDirection() == GameState.Direction.NORTH) {
 				gamestate.setYCoord(gamestate.getYCoord() - 1);
 			}
-			/*
-			if (gamestate.checkVictory()) {
-				
-			}
-			*/
+	
 		} else {
-			//gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord] = true; // block path in gamestate
 			if (gamestate.getDirection() == GameState.Direction.EAST) {
-				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord() + 1, gamestate.getYCoord(), true);
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord() + 1, gamestate.getYCoord(), false);
 			}
 			if (gamestate.getDirection() == GameState.Direction.SOUTH) {
-				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord(), gamestate.getYCoord() + 1, true);
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord(), gamestate.getYCoord() + 1, false);
 			}
 			if (gamestate.getDirection() == GameState.Direction.WEST) {
-				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord() - 1, gamestate.getYCoord(), true);
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord() - 1, gamestate.getYCoord(), false);
 			}
 			
 			if (gamestate.getDirection() == GameState.Direction.NORTH) {
-				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord(), gamestate.getYCoord() - 1, true);
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord(), gamestate.getYCoord() - 1, false);
 			}
 		}
 		
 		map.updateVisuals();
-		map.getPlayerMovement();//handleMovementSelection();
+		map.getPlayerMovement();
 	}
 	
 	

@@ -10,7 +10,7 @@ public class GameState implements Serializable {
 	private static final long serialVersionUID = 7912621071699318862L;
 	private int myMazeWidth;
 	private int myMazeHeight;
-	public boolean myPaths[][]; // which paths are closed/unavailable;
+	private boolean myPaths[][]; // which paths are closed/unavailable;
 	
 	public int myXCoord; // current player x-coord
 	public int myYCoord; // current player y-coord
@@ -75,61 +75,90 @@ public class GameState implements Serializable {
 		myYCoord = theYCoord;
 	}
 	
-	public boolean getPathOpenBetweenRooms(final int theStartX, final int theStartY, final int theEndX, final int theEndY) {
+	
+	private boolean getHorizontalPathBetweenRooms(final int theY, final int theStartX, final int theEndX) {
 		int tempX = theStartX;
-		int tempY = theStartY;
-		if (theEndX > tempX) {
+		if(theEndX > tempX) {
 			tempX = theEndX;
 		}
-		if (theEndY > tempY) {
-			tempY = theEndY;
-		}
-		int pathX = 0;
-		int pathY = 0;
-		if (theEndX == theStartX) {
-			pathX = tempX;
-			pathY = tempY * 2 - 1;
+		
+		int pathX = tempX;
+		int pathY = theY * 2;
+		
+		if (inBounds(pathX, pathY)) {
+			return !myPaths[pathX][pathY];
 		} else {
-			pathX = tempX - 1;
-			pathY = tempY * 2;
+			return false;
 		}
-		boolean path = false;
-		System.out.println(theStartX);
-		System.out.println(theStartY);
-		System.out.println(theEndX);
-		System.out.println(theEndY);
-		//something wrong here. Needs to check for bounds.
-		if (inBounds(pathX, pathY, myPaths)) {
-			path = !myPaths[pathX][pathY];
-		}
-		return path;
 	}
 	
-	public void setPathOpenBetweenRooms(final int theStartX, final int theStartY, final int theEndX, final int theEndY, boolean thePath) {
-		int tempX = theStartX;
+	private boolean getVerticalPathBetweenRooms(final int theX, final int theStartY, final int theEndY) {
 		int tempY = theStartY;
-		if (theEndX > tempX) {
-			tempX = theEndX;
-		}
-		if (theEndY > tempY) {
+		if(theEndY > tempY) {
 			tempY = theEndY;
 		}
-		int pathX = 0;
-		int pathY = 0;
-		if (theEndX == theStartX) {
-			pathX = tempX;
-			pathY = tempY * 2 - 1;
+		
+		int pathX = theX;	
+		int pathY = tempY * 2 - 1;
+		
+		if (inBounds(pathX, pathY)) {
+			return !myPaths[pathX][pathY];
 		} else {
-			pathX = tempX - 1;
-			pathY = tempY * 2;
+			return false;
 		}
-		System.out.println(theStartX);
-		System.out.println(theStartY);
-		System.out.println(theEndX);
-		System.out.println(theEndY);
-		//something wrong here. Needs to check for bounds.
-		if (inBounds(pathX, pathY, myPaths)) {
-			myPaths[pathX][pathY] = thePath;
+	}
+	
+	public boolean getPathOpenBetweenRooms(final int theStartX, final int theStartY, final int theEndX, final int theEndY) {
+		if (theEndX == theStartX) {
+			boolean value = getVerticalPathBetweenRooms(theStartX, theStartY, theEndY);
+			if (getVerticalPathBetweenRooms(theStartX, theStartY, theEndY) != getVerticalPathBetweenRooms(theStartX, theEndY, theStartY)) {
+				System.out.println("Error: pathcheck not symmetrical");
+			}
+			return value;
+		} else {
+			
+			boolean value = getHorizontalPathBetweenRooms(theStartY, theStartX, theEndX);
+			if (getHorizontalPathBetweenRooms(theStartY, theStartX, theEndX) != getHorizontalPathBetweenRooms(theStartY, theEndX, theStartX)) {
+				System.out.println("Error: pathcheck not symmetrical");
+			}
+			return value;
+		}
+	}
+	
+	private void setHorizontalPathBetweenRooms(final int theY, final int theStartX, final int theEndX, boolean value) {
+		int tempX = theStartX;
+		if(theEndX > tempX) {
+			tempX = theEndX;
+		}
+		
+		int pathX = tempX;
+		int pathY = theY * 2;
+		
+		if (inBounds(pathX, pathY)) {
+			myPaths[pathX][pathY] = !value;
+		}
+	}
+	
+	private void setVerticalPathBetweenRooms(final int theX, final int theStartY, final int theEndY, boolean value) {
+		int tempY = theStartY;
+		if(theEndY > tempY) {
+			tempY = theEndY;
+		}
+		
+		int pathX = theX;	
+		int pathY = tempY * 2 - 1;
+		
+		if (inBounds(pathX, pathY)) {
+			myPaths[pathX][pathY] = !value;
+		}
+	}
+	
+	
+	public void setPathOpenBetweenRooms(final int theStartX, final int theStartY, final int theEndX, final int theEndY, boolean thePath) {
+		if (theEndX == theStartX) {
+			setVerticalPathBetweenRooms(theStartX, theStartY, theEndY, thePath);
+		} else {
+			setHorizontalPathBetweenRooms(theStartY, theStartX, theEndX, thePath);
 		}
 	}
 	
@@ -155,7 +184,7 @@ public class GameState implements Serializable {
 	}
 	
 	private boolean isPathHelper(int i, int j, boolean[][] theVisited) {
-		if (inBounds(i, j, myPaths) && myPaths[i][j] != true && !theVisited[i][j]) {
+		if (inBounds(i, j) && myPaths[i][j] != true && !theVisited[i][j]) {
 			
 			theVisited[i][j] = true;
 			
@@ -189,9 +218,9 @@ public class GameState implements Serializable {
 		return false;
 	}
 	
-	private boolean inBounds(int theRow, int theCol, boolean[][] thePaths) {
-		if (theRow >= 0 && theRow < thePaths.length 
-				&& theCol >= 0 && theCol < thePaths[0].length) {
+	private boolean inBounds(int theRow, int theCol) {
+		if (theRow >= 0 && theRow < myPaths.length 
+				&& theCol >= 0 && theCol < myPaths[0].length) {
 			return true;
 		}
 		return false;
