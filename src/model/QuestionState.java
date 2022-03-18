@@ -32,7 +32,7 @@ public class QuestionState implements java.io.Serializable  {
 	/*
 	 * If answered correctly.
 	 */
-	private boolean myAnsweredCorrectly = false; // A flag for if the last answered questions was answered correctly
+	private boolean myAnsweredCorrectly = false;
 	
 	/**
 	 * Getter for the asked questions.
