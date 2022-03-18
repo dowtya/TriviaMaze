@@ -6,33 +6,68 @@ import java.util.function.Function;
 import model.Question;
 import model.QuestionState;
 import gui.QuestionBox;
-
+/**
+ * Class QuestionController which controls the Question being asked and if it is correct or not.
+ * @author Alec Dowty
+ * @author Aaron Gittel
+ * @author Joel Hemphill
+ *
+ */
 public class QuestionController {
 	
+	/*
+	 * Game variable.
+	 */
 	Game myGame;
+	
+	/*
+	 * QuestionBox variable.
+	 */
 	QuestionBox myQuestionBox;
+	
+	/*
+	 * ArrayList of questions.
+	 */
 	private ArrayList<Question> myQuestionList;
 	
+	/**
+	 * Constructor for QuestionController, takes in a list of questions and the game and sets them.
+	 * Also creates the Question box based on the game.
+	 * @param theQuestionList List of Questions.
+	 * @param theGame Game variable.
+	 */
 	QuestionController(ArrayList<Question> theQuestionList, Game theGame) {
 		myGame = theGame;
 		myQuestionBox = new QuestionBox(myGame);
 		myQuestionList = theQuestionList;
 	}
 	
+	/**
+	 * Method askNextQuestion which deals with the Question being asked next, what type it is, what the
+	 * answer choices are, and what the correct answer is.
+	 * @param questionState Current state of the question.
+	 * @param function Game function.
+	 * @param game Gamestate currently
+	 * @return If the answer is answered correectly.
+	 */
 	QuestionState askNextQuestion(QuestionState questionState, Function<Game, Void> function, Game game) {
+		// Random integer for selecting a question.
 		Random r = new Random();
 		int questionSelection = r.nextInt(myQuestionList.size());
+		// Type of question, the question and the correct answer based on the random integer selection.
 		String question = myQuestionList.get(questionSelection).getMyQuestion();
 		String questionType = myQuestionList.get(questionSelection).getMyType();
 		String correctAnswer = myQuestionList.get(questionSelection).getMyAnswer();
 		ArrayList<String> myAnswers = new ArrayList<String>();
 		
+		// What to do if multiple choice
 		if (questionType.equalsIgnoreCase("Multiple Choice")) {
 			
 			myAnswers.add(myQuestionList.get(questionSelection).getMyChoice1());
 			myAnswers.add(myQuestionList.get(questionSelection).getMyChoice2());
 			myAnswers.add(myQuestionList.get(questionSelection).getMyChoice3());
 			
+		// What to do in True or False.	
 		} else if (questionType.equalsIgnoreCase("True/False")) {
 			
 			myAnswers.add(myQuestionList.get(questionSelection).getMyChoice1());
@@ -40,14 +75,7 @@ public class QuestionController {
 			
 		}
 		
-//		String[] answers = {myQuestionList.get(questionSelection).getMyChoice1(),
-//							myQuestionList.get(questionSelection).getMyChoice2(),
-//							myQuestionList.get(questionSelection).getMyChoice3()};
-		
-		
-		//TODO: determine question and answers
-		
-		//
+		// What to do if Short Answer.
 		if (questionType.equalsIgnoreCase("Short Answer")) {
 			myQuestionBox.displayShortAnswerQuestion(question, (answer) -> {
 				System.out.println(correctAnswer);
@@ -64,8 +92,9 @@ public class QuestionController {
 				return questionState.isAnsweredCorrectly();
 			});
 		} else {
+			
+			// Evaluating if the Question is correct or not.
 			myQuestionBox.displaySingleChoiceQuestion(question, myAnswers, (index) -> {
-				// evaluate if the answer at that index is correct
 				
 				if (myAnswers.get(index).equals(correctAnswer)) {
 					
@@ -78,14 +107,7 @@ public class QuestionController {
 				return questionState.isAnsweredCorrectly();
 			});
 		}
-		
-		
-		// display current question
-		// display possible answers
-		
-		// wait for user to select an answer
-		// validate whether question was answered correctly
-		// update questionstate
+
 		myQuestionList.remove(questionSelection);
 		return questionState;
 	}
