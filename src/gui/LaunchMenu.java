@@ -1,14 +1,24 @@
 package gui;
 
 import javax.swing.JFrame;
-
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import controller.Game;
 
+/**
+ * The class which initializes the swing environment and the game object.
+ * @author Alec Dowty
+ * @author Aaron Gitell
+ * @author Joel Hemphill
+ */
 public class LaunchMenu {
 
+	/**
+	 * The entry point to the program
+	 * @param args unused
+	 */
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -35,10 +45,12 @@ public class LaunchMenu {
 						return Void;
 					});
 					
-					frame.setLayout(new GridLayout(1,2));
+					frame.setLayout(new FlowLayout());
+					frame.getContentPane().setLayout(new GridLayout(1,2));
+					frame.getContentPane().add(game.getMap());
+					frame.getContentPane().add(game.getQuestionBox());
 					
-					frame.add(game.getMap());
-					frame.add(game.getQuestionBox());
+					frame.setJMenuBar(game.getOptionBar());
 					
 					frame.revalidate();
 					frame.pack();

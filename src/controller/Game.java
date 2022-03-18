@@ -62,7 +62,7 @@ public class Game {
 		myQuestioncontroller = new QuestionController(DB.getMyQuestionList(), this);
 		
 		// create optionbar
-		optionbar = new OptionBar();
+		optionbar = new OptionBar(this);
 		
 		if (gamestate.getDirection() == GameState.Direction.NONE) {
 			handleMovementSelection();
@@ -117,6 +117,15 @@ public class Game {
 	public Map getMap() {
 		return map;
 	}
+	
+	/**
+	 * Getter for the OptionBar.
+	 * @return The OptionBar.
+	 */
+	public OptionBar getOptionBar() {
+		return optionbar;
+	}
+	
 	
 	/**
 	 * Method handleQuestionResolution handles what happens when an answer is given and what to do
