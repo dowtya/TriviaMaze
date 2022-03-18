@@ -247,8 +247,6 @@ public class Map extends JPanel {
 	public void updateVisuals() {
 		
 		if(myGame.getGameState().checkDefeat()) {
-			//JOptionPane popUp = new JOptionPane();
-			//this.add(popUp);
 			JOptionPane.showMessageDialog(this.getRootPane(), "You Lose!");
 			myGame.myExitRoutine.apply(null);
 		}
@@ -257,36 +255,7 @@ public class Map extends JPanel {
 			JOptionPane.showMessageDialog(this.getRootPane(), "You Win!");
 			myGame.myExitRoutine.apply(null);
 		}
-		
-		// remark only the paths that should have changed; note - bad code smell. This is recreating the functionality of the model and the controller.
-		/*
-		if(!myGame.getGameState().getQuestionState().isAnsweredCorrectly()) {
-			RoomVisual curRoom = rooms[myGame.getGameState().myXCoord][myGame.getGameState().myYCoord];
 			
-			switch (myGame.getGameState().getDirection()) {
-			case NORTH:
-				curRoom.markUpperClosed();
-				rooms[myGame.getGameState().myXCoord][myGame.getGameState().myYCoord - 1].markLowerClosed();
-				break;
-			case SOUTH:
-				curRoom.markLowerClosed();
-				rooms[myGame.getGameState().myXCoord][myGame.getGameState().myYCoord + 1].markUpperClosed();
-				break;
-			case EAST:
-				curRoom.markRightClosed();
-				rooms[myGame.getGameState().myXCoord + 1][myGame.getGameState().myYCoord].markLeftClosed();
-				break;
-			case WEST:
-				curRoom.markLeftClosed();
-				rooms[myGame.getGameState().myXCoord - 1][myGame.getGameState().myYCoord].markRightClosed();
-				break;
-			default:
-				break;
-			}
-		}
-		*/
-		
-		
 		// remark all paths
 		for(int y = 0; y < myGame.getGameState().getMazeHeight(); y++) {
 			for(int x = 0; x < myGame.getGameState().getMazeWidth(); x++) {
