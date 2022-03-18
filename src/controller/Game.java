@@ -178,5 +178,12 @@ public class Game {
 		map.updateVisuals();
 		//Get the player movement.
 		map.getPlayerMovement();
-	}		
+	}
+	/**
+	 * Constructor for class Game.
+	 */
+	public Game() {
+		gamestate = new GameState(5, 5);
+		map = new Map(this);
+	}
 }
