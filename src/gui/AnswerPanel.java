@@ -32,11 +32,8 @@ public class AnswerPanel extends JPanel implements ActionListener {
 		this.setBorder(BorderFactory.createTitledBorder("Answers"));
 	}
 	
-<<<<<<< HEAD
-	public void addSingleChoiceAnswers(final ArrayList<String> answers, Function<Integer, Boolean> theEvalAnswerFunc, ActionListener theAnswerResultHandler) {
-=======
+
 	public void addSingleChoiceAnswers(final ArrayList<String> answers, Function<Integer, Boolean> theEvalChoiceAnswerFunc, ActionListener theAnswerResultHandler) {
->>>>>>> master
 		myAnswerResultHandler = theAnswerResultHandler;
 		myEvalChoiceAnswerFunc = theEvalChoiceAnswerFunc;
 		

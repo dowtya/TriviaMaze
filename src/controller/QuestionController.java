@@ -12,11 +12,6 @@ public class QuestionController {
 	Game myGame;
 	QuestionBox myQuestionBox;
 	private ArrayList<Question> myQuestionList;
-<<<<<<< HEAD
-	private ArrayList<String> myAnswers;
-=======
-	//private  myAnswers;
->>>>>>> master
 	
 	QuestionController(ArrayList<Question> theQuestionList, Game theGame) {
 		myGame = theGame;
@@ -30,11 +25,7 @@ public class QuestionController {
 		String question = myQuestionList.get(questionSelection).getMyQuestion();
 		String questionType = myQuestionList.get(questionSelection).getMyType();
 		String correctAnswer = myQuestionList.get(questionSelection).getMyAnswer();
-<<<<<<< HEAD
-		myAnswers = new ArrayList<String>();
-=======
 		ArrayList<String> myAnswers = new ArrayList<String>();
->>>>>>> master
 		
 		if (questionType.equalsIgnoreCase("Multiple Choice")) {
 			
@@ -57,17 +48,10 @@ public class QuestionController {
 		//TODO: determine question and answers
 		
 		//
-<<<<<<< HEAD
-		myQuestionBox.displaySingleChoiceQuestion(question, myAnswers, (index) -> {
-			// evaluate if the answer at that index is correct
-			
-			if (myAnswers.get(index).equals(correctAnswer)) {
-=======
 		if (questionType.equalsIgnoreCase("Short Answer")) {
 			myQuestionBox.displayShortAnswerQuestion(question, (answer) -> {
 				System.out.println(correctAnswer);
 				// evaluate if the answer at that index is correct
->>>>>>> master
 				
 				if (answer.equalsIgnoreCase(correctAnswer)) {
 					

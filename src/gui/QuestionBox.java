@@ -89,9 +89,6 @@ public class QuestionBox extends JPanel implements ActionListener {
 		}
 	}
 	
-<<<<<<< HEAD
-	public void displaySingleChoiceQuestion(String question, ArrayList<String> answers, Function<Integer, Boolean> evalAnswerFunc) {
-=======
 	public void displayShortAnswerQuestion(String question, Function<String, Boolean> evalAnswerFunc) {
 		reset();
 		questionPanel.setText(question);
@@ -102,7 +99,6 @@ public class QuestionBox extends JPanel implements ActionListener {
 	
 	public void displaySingleChoiceQuestion(String question, ArrayList<String> answers, Function<Integer, Boolean> evalAnswerFunc) {
 		reset();
->>>>>>> master
 		questionPanel.setText(question);
 		answerPanel.addSingleChoiceAnswers(answers, evalAnswerFunc, this);
 		
