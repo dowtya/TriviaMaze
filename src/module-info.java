@@ -3,5 +3,6 @@ module TriviaMaze {
 	requires java.desktop;
 	requires java.sql;
 	requires org.xerial.sqlitejdbc;
+	requires org.junit.jupiter.api;
 	
 }
