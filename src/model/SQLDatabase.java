@@ -1,3 +1,8 @@
+/*
+ * TriviaMaze Project
+ * TCSS 360
+ * Winter 2022
+ */
 package model;
 
 import java.sql.Connection;
@@ -9,14 +14,30 @@ import java.util.ArrayList;
 
 import org.sqlite.SQLiteDataSource;
 
+/**
+ * This class creates a SQLiteDatabase of questions for the Trivia maze game.
+ * 
+ * @author Aaron Gitell
+ * @version 3/18/2022
+ */
 public class SQLDatabase {
 	
+	/**
+	 * ArrayList of Questions.
+	 */
 	private ArrayList<Question> myQuestionList;
 	
+	/**
+	 * constructor that initiates QuestionList.
+	 */
 	public SQLDatabase() {
 		myQuestionList = new ArrayList<Question>();
 	}
 	
+	/**
+	 * Creates and inserts a table into the Database. Also adds each Question to QuestionList.
+	 * Deletes the table after questions have been added to QuestionList.
+	 */
 	public void setUp() {
 		//SQLDatabase DB = new SQLDatabase();
     	SQLiteDataSource DS = establishConnection("jdbc:sqlite:questions.db");
@@ -68,6 +89,12 @@ public class SQLDatabase {
     	
     }
     
+	/**
+	 * Establishes a connection with a SQLiteDatasource.
+	 * 
+	 * @param theURL for the database file.
+	 * @return SQLiteDataSource for connection.
+	 */
     public static SQLiteDataSource establishConnection(String theURL) {
         SQLiteDataSource ds = null;
 
@@ -82,6 +109,12 @@ public class SQLDatabase {
         return ds;
     }
     
+    /**
+     * Creates an empty table that includes columns for types of questions, questions,
+     * the correct answer, and possible choices.
+     * 
+     * @param theDS for connection.
+     */
     private void createEmptyTable(SQLiteDataSource theDS) {
         String query = "CREATE TABLE IF NOT EXISTS questions ( " +
                 "TYPE TEXT NOT NULL, " +
@@ -99,6 +132,11 @@ public class SQLDatabase {
           }
     }
     
+    /**
+     * Deletes the table from the database file.
+     * 
+     * @param theDS for connection.
+     */
     private void deleteTable(SQLiteDataSource theDS) {
         String query = "DROP TABLE IF EXISTS questions";
         try ( Connection conn = theDS.getConnection();
@@ -110,6 +148,16 @@ public class SQLDatabase {
           }
     }
     
+    /**
+     * Adds a multiple choice type question to the database.
+     * 
+     * @param theDS for connection.
+     * @param theQuestion string of a question.
+     * @param theAnswer string of the answer.
+     * @param theChoice1 string of a choice.
+     * @param theChoice2 string of a choice.
+     * @param theChoice3 string of a choice.
+     */
     private void addMultipleChoice(SQLiteDataSource theDS, String theQuestion, 
     		String theAnswer, String theChoice1, String theChoice2, String theChoice3) {
     	String query = "INSERT INTO questions ( TYPE, QUESTION, ANSWER, CHOICE1, CHOICE2, CHOICE3 ) VALUES ( 'multiple choice', '" +
@@ -124,6 +172,13 @@ public class SQLDatabase {
           }
     }
     
+    /**
+     * Adds a true or false type question to the database.
+     * 
+     * @param theDS for connection.
+     * @param theQuestion string of a question.
+     * @param theAnswer string of the answer.
+     */
     private void addTrueFalse(SQLiteDataSource theDS, String theQuestion, String theAnswer) {
     	String query = "INSERT INTO questions ( TYPE, QUESTION, ANSWER, CHOICE1, CHOICE2 ) VALUES ( 'True/False', '" +
         		theQuestion + "', '" + theAnswer + "', 'true', 'false' )";
@@ -136,6 +191,13 @@ public class SQLDatabase {
               }
     }
     
+    /**
+     * Adds a short answer type question to the Database.
+     * 
+     * @param theDS for connection.
+     * @param theQuestion string of a question.
+     * @param theAnswer string of the answer.
+     */
     private void addShortAnswer(SQLiteDataSource theDS, String theQuestion, String theAnswer) {
     	String query = "INSERT INTO questions ( TYPE, QUESTION, ANSWER ) VALUES ( 'Short Answer', '" +
         		theQuestion + "', '" + theAnswer + "' )";
@@ -148,6 +210,12 @@ public class SQLDatabase {
               }
     }
     
+    /**
+     * Creates an ArrayList of Questions from the contents of this Database.
+     * 
+     * @param theDS for the connection.
+     * @return ArrayList of Questions.
+     */
     private ArrayList<Question> createQuestionList(SQLiteDataSource theDS) {
     	ArrayList<Question> result = new ArrayList<Question>(); 
         String query = "SELECT * FROM questions";
@@ -175,10 +243,20 @@ public class SQLDatabase {
         return result;
     }
     
+    /**
+     * Retrieves myQuestionList.
+     * 
+     * @return ArrayList containing questions.
+     */
     public ArrayList<Question> getMyQuestionList() {
     	return myQuestionList;
     }
     
+    /**
+     * Sets myQuestionList to the given QuestionList.
+     * 
+     * @param theQuestionList an ArrayList of Questions.
+     */
     private void setMyQuestionList(ArrayList<Question> theQuestionList) {
     	myQuestionList = theQuestionList;
     }
