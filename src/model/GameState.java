@@ -244,10 +244,6 @@ public class GameState implements Serializable {
 		return defeat;
 	
 	}
-<<<<<<< HEAD
+
 }
 
-
-=======
-}
->>>>>>> master
