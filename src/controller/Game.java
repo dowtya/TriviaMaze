@@ -16,7 +16,9 @@ public class Game {
 	private QuestionController myQuestioncontroller;
 	OptionBar optionbar;
 	
-	public void start(String filename, Function<Void,Void> exitRoutine) {
+	public Function<Void,Void> myExitRoutine;
+	
+	public void start(String filename, Function<Void,Void> theExitRoutine) {
 	/**
 	 * Problems atm, Need to work on this on sunday, I think it would just be a way to open up
 	 * and search for a file to read, but I don't have much experience with loading files at all
@@ -31,12 +33,14 @@ public class Game {
 		// create map
 		map = new Map(this);
 		
+		myExitRoutine = theExitRoutine;
+		
 		// create database
 		SQLDatabase DB = new SQLDatabase();
 		DB.setUp();
 		
 		// create questionbox
-		myQuestioncontroller = new QuestionController(DB.getMyQuestionList());
+		myQuestioncontroller = new QuestionController(DB.getMyQuestionList(), this);
 		
 		// create optionbar
 		optionbar = new OptionBar();
@@ -91,55 +95,36 @@ public class Game {
 		if (gamestate.getQuestionState().isAnsweredCorrectly()) {
 			
 			if (gamestate.getDirection() == GameState.Direction.EAST) {
-				gamestate.setXCoord(gamestate.myXCoord + 1);
+				gamestate.setXCoord(gamestate.getXCoord() + 1);
+			} else if (gamestate.getDirection() == GameState.Direction.SOUTH) {
+				gamestate.setYCoord(gamestate.getYCoord() + 1);
+			} else if (gamestate.getDirection() == GameState.Direction.WEST) {
+				gamestate.setXCoord(gamestate.getXCoord() - 1);
+			} else if (gamestate.getDirection() == GameState.Direction.NORTH) {
+				gamestate.setYCoord(gamestate.getYCoord() - 1);
+			}
+	
+		} else {
+			if (gamestate.getDirection() == GameState.Direction.EAST) {
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord() + 1, gamestate.getYCoord(), false);
 			}
 			if (gamestate.getDirection() == GameState.Direction.SOUTH) {
-				//add +1 to row part of 2d array
-				gamestate.setYCoord(gamestate.getYCoord() + 1);
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord(), gamestate.getYCoord() + 1, false);
 			}
 			if (gamestate.getDirection() == GameState.Direction.WEST) {
-				gamestate.setXCoord(gamestate.myXCoord - 1);
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord() - 1, gamestate.getYCoord(), false);
 			}
 			
 			if (gamestate.getDirection() == GameState.Direction.NORTH) {
-				//add +1 to row part of 2d array
-				gamestate.setYCoord(gamestate.getYCoord() - 1);
-			}
-			
-			if (gamestate.getXCoord() == gamestate.getMazeWidth() - 1 && gamestate.getYCoord() == gamestate.getMazeHeight() - 1) {
-				displayVictory();
-				displayGameOver();
-			}
-			
-		} else {
-			gamestate.myPaths[gamestate.myXCoord][gamestate.myYCoord] = true; // block path in gamestate
-			
-			if (checkForBoxedIn() == true) {
-				displayFailure();
-				displayGameOver();
+				gamestate.setPathOpenBetweenRooms(gamestate.getXCoord(), gamestate.getYCoord(), gamestate.getXCoord(), gamestate.getYCoord() - 1, false);
 			}
 		}
 		
 		map.updateVisuals();
-		map.getPlayerMovement();//handleMovementSelection();
+		map.getPlayerMovement();
 	}
 	
 	
-	
-	public void displayVictory() {
-		
-		System.out.println("You win!");
-	}
-	
-	public void displayFailure() {
-		System.out.println("You have lost, no more moves were found. Better luck next time!");
-	}
-	
-	
-	public void displayGameOver() {	
-		System.out.println("GAME OVER! \nThank you for playing our game, the game will now exit.");
-		System.exit(0);		
-	}
 	
 	//incomplete
 	public boolean checkForBoxedIn() {

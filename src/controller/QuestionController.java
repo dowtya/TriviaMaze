@@ -9,12 +9,18 @@ import gui.QuestionBox;
 
 public class QuestionController {
 	
+	Game myGame;
 	QuestionBox myQuestionBox;
 	private ArrayList<Question> myQuestionList;
+<<<<<<< HEAD
 	private ArrayList<String> myAnswers;
+=======
+	//private  myAnswers;
+>>>>>>> master
 	
-	QuestionController(ArrayList<Question> theQuestionList) {
-		myQuestionBox = new QuestionBox();
+	QuestionController(ArrayList<Question> theQuestionList, Game theGame) {
+		myGame = theGame;
+		myQuestionBox = new QuestionBox(myGame);
 		myQuestionList = theQuestionList;
 	}
 	
@@ -24,7 +30,11 @@ public class QuestionController {
 		String question = myQuestionList.get(questionSelection).getMyQuestion();
 		String questionType = myQuestionList.get(questionSelection).getMyType();
 		String correctAnswer = myQuestionList.get(questionSelection).getMyAnswer();
+<<<<<<< HEAD
 		myAnswers = new ArrayList<String>();
+=======
+		ArrayList<String> myAnswers = new ArrayList<String>();
+>>>>>>> master
 		
 		if (questionType.equalsIgnoreCase("Multiple Choice")) {
 			
@@ -47,20 +57,43 @@ public class QuestionController {
 		//TODO: determine question and answers
 		
 		//
+<<<<<<< HEAD
 		myQuestionBox.displaySingleChoiceQuestion(question, myAnswers, (index) -> {
 			// evaluate if the answer at that index is correct
 			
 			if (myAnswers.get(index).equals(correctAnswer)) {
+=======
+		if (questionType.equalsIgnoreCase("Short Answer")) {
+			myQuestionBox.displayShortAnswerQuestion(question, (answer) -> {
+				System.out.println(correctAnswer);
+				// evaluate if the answer at that index is correct
+>>>>>>> master
 				
-				questionState.setAnsweredCorrectly(true);
+				if (answer.equalsIgnoreCase(correctAnswer)) {
+					
+					questionState.setAnsweredCorrectly(true);
+					
+				} else {
+					
+					questionState.setAnsweredCorrectly(false);
+				}
+				return questionState.isAnsweredCorrectly();
+			});
+		} else {
+			myQuestionBox.displaySingleChoiceQuestion(question, myAnswers, (index) -> {
+				// evaluate if the answer at that index is correct
 				
-			} else {
-				
-				questionState.setAnsweredCorrectly(false);
-			}
-			
-			return questionState.isAnsweredCorrectly();
-		});
+				if (myAnswers.get(index).equals(correctAnswer)) {
+					
+					questionState.setAnsweredCorrectly(true);
+					
+				} else {
+					
+					questionState.setAnsweredCorrectly(false);
+				}
+				return questionState.isAnsweredCorrectly();
+			});
+		}
 		
 		
 		// display current question
@@ -69,7 +102,7 @@ public class QuestionController {
 		// wait for user to select an answer
 		// validate whether question was answered correctly
 		// update questionstate
-		
+		myQuestionList.remove(questionSelection);
 		return questionState;
 	}
 }

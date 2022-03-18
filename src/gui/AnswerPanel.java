@@ -1,7 +1,7 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import java.util.function.Function;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 
@@ -19,18 +20,25 @@ public class AnswerPanel extends JPanel implements ActionListener {
 	ActionListener myAnswerResultHandler;
 	
 	ArrayList<JButton> mySingleChoiceButtons;
+	JButton myShortAnswerSubmitButton;
+	JTextField myShortAnswerTextField;
 	boolean isCorrect;
 	
-	Function<Integer, Boolean> myEvalAnswerFunc;
+	Function<Integer, Boolean> myEvalChoiceAnswerFunc;
+	Function<String, Boolean> myEvalStringAnswerFunc;
 	
 	public AnswerPanel() {
 		mySingleChoiceButtons = new ArrayList<JButton>();
 		this.setBorder(BorderFactory.createTitledBorder("Answers"));
 	}
 	
+<<<<<<< HEAD
 	public void addSingleChoiceAnswers(final ArrayList<String> answers, Function<Integer, Boolean> theEvalAnswerFunc, ActionListener theAnswerResultHandler) {
+=======
+	public void addSingleChoiceAnswers(final ArrayList<String> answers, Function<Integer, Boolean> theEvalChoiceAnswerFunc, ActionListener theAnswerResultHandler) {
+>>>>>>> master
 		myAnswerResultHandler = theAnswerResultHandler;
-		myEvalAnswerFunc = theEvalAnswerFunc;
+		myEvalChoiceAnswerFunc = theEvalChoiceAnswerFunc;
 		
 		if (answers != null) {
 			for (int i = 0; i < answers.size(); i++) {
@@ -40,6 +48,28 @@ public class AnswerPanel extends JPanel implements ActionListener {
 				this.add(button);
 			}
 		}
+	}
+	
+	public void addShortAnswer(Function<String, Boolean> theEvalStringAnswerFunc, ActionListener theAnswerResultHandler) {
+		myAnswerResultHandler = theAnswerResultHandler;
+		myEvalStringAnswerFunc = theEvalStringAnswerFunc;
+		myShortAnswerTextField = new JTextField();
+		myShortAnswerTextField.setBounds(0, 0, 200, 20);
+		myShortAnswerSubmitButton = new JButton();
+		myShortAnswerSubmitButton.setText("Submit");
+		myShortAnswerSubmitButton.addActionListener(this);
+		this.add(myShortAnswerTextField);
+		this.add(myShortAnswerSubmitButton);
+		this.setLayout(new GridLayout(2, 1));
+	}
+	
+	public void reset() {
+		mySingleChoiceButtons.clear();
+		this.removeAll();
+		myEvalStringAnswerFunc = null;
+		myEvalChoiceAnswerFunc = null;
+		myAnswerResultHandler = null;
+		this.repaint();
 	}
 	
 	public void actionPerformed(ActionEvent e) {	
@@ -56,8 +86,8 @@ public class AnswerPanel extends JPanel implements ActionListener {
 			JButton button = (JButton) e.getSource();
 			
 			// Color the button depending on if the answer was correct
-            boolean wasCorrect = myEvalAnswerFunc.apply(buttonIndex);
-            if (wasCorrect) {
+           isCorrect = myEvalChoiceAnswerFunc.apply(buttonIndex);
+            if (isCorrect) {
             	button.setBackground(Color.GREEN);
             } else {
             	button.setBackground(Color.RED);
@@ -68,6 +98,10 @@ public class AnswerPanel extends JPanel implements ActionListener {
             
             // Clear the answer panel after 1 second
             new Timer(1000, this).start();
+		} else if (e.getSource() == myShortAnswerSubmitButton) {
+			isCorrect = myEvalStringAnswerFunc.apply(myShortAnswerTextField.getText());
+			e.setSource(this);
+			myAnswerResultHandler.actionPerformed(e);
 		}
 	}
 	
