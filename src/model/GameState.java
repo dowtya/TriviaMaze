@@ -4,7 +4,7 @@ import java.io.*;
 /**
  * GameState Class which controls the state of the game throughout the playthrough a player has.
  * @author Alec Dowty
- * @author Aaron Gittel
+ * @author Aaron Gitell
  * @author Joel Hemphill
  *
  */

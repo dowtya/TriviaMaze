@@ -9,7 +9,7 @@ import gui.QuestionBox;
 /**
  * Class QuestionController which controls the Question being asked and if it is correct or not.
  * @author Alec Dowty
- * @author Aaron Gittel
+ * @author Aaron Gitell
  * @author Joel Hemphill
  *
  */
