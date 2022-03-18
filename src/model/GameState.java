@@ -313,39 +313,39 @@ public class GameState implements Serializable {
 	
 	/**
 	 * Helper method for checking if there is a path to victory.
-	 * @param i
-	 * @param j
-	 * @param theVisited
+	 * @param i the row.
+	 * @param j the column.
+	 * @param theVisited rooms.
 	 * @return
 	 */
-	private boolean isPathHelper(int i, int j, boolean[][] theVisited) {
-		if (inBounds(i, j) && myPaths[i][j] != true && !theVisited[i][j]) {
+	private boolean isPathHelper(int theRow, int theCol, boolean[][] theVisited) {
+		if (inBounds(theRow, theCol) && myPaths[theRow][theCol] != true && !theVisited[theRow][theCol]) {
 			
-			theVisited[i][j] = true;
+			theVisited[theRow][theCol] = true;
 			
-			if (i == myPaths.length - 1 && j == myPaths[0].length - 1) {
+			if (theRow == myPaths.length - 1 && theCol == myPaths[0].length - 1) {
 				return true;
 			}
 			//go north
-			boolean north = isPathHelper(i - 1, j, theVisited);
+			boolean north = isPathHelper(theRow - 1, theCol, theVisited);
 			if (north) {
 				return true;
 			}
 			
 			//go west
-			boolean west = isPathHelper(i, j - 1, theVisited);
+			boolean west = isPathHelper(theRow, theCol - 1, theVisited);
 			if (west) {
 				return true;
 			}
 			
 			//go south
-			boolean south = isPathHelper(i + 1, j, theVisited);
+			boolean south = isPathHelper(theRow + 1, theCol, theVisited);
 			if (south) {
 				return true;
 			}
 			
 			//go east
-			boolean east = isPathHelper(i, j + 1, theVisited);
+			boolean east = isPathHelper(theRow, theCol + 1, theVisited);
 			if (east) {
 				return true;
 			}
