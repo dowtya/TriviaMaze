@@ -36,7 +36,7 @@ public class QuestionController {
 	 * @param theQuestionList List of Questions.
 	 * @param theGame Game variable.
 	 */
-	QuestionController(ArrayList<Question> theQuestionList, Game theGame) {
+	public QuestionController(ArrayList<Question> theQuestionList, Game theGame) {
 		myGame = theGame;
 		myQuestionBox = new QuestionBox(myGame);
 		myQuestionList = theQuestionList;
@@ -50,7 +50,7 @@ public class QuestionController {
 	 * @param game Gamestate currently
 	 * @return If the answer is answered correectly.
 	 */
-	QuestionState askNextQuestion(QuestionState questionState, Function<Game, Void> function, Game game) {
+	public QuestionState askNextQuestion(QuestionState questionState, Function<Game, Void> function, Game game) {
 		// Random integer for selecting a question.
 		Random r = new Random();
 		int questionSelection = r.nextInt(myQuestionList.size());
