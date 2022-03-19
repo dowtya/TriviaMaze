@@ -126,6 +126,6 @@ public class Question {
 	 */
 	public String toString() {
 		return "Type = " + myType + ", Question = " + myQuestion + ", Answer = " + myAnswer +
-				", Choice1 = " + myChoice1 + ", choice2 = " + myChoice2 + ", choice3 = " + myChoice3;
+				", choice1 = " + myChoice1 + ", choice2 = " + myChoice2 + ", choice3 = " + myChoice3;
 	}
 }
