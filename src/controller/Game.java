@@ -41,6 +41,14 @@ public class Game {
 	public Function<Void,Void> myExitRoutine;
 	
 	/**
+	 * Constructor for class Game.
+	 */
+	public Game() {
+		gamestate = new GameState(5, 5);
+		map = new Map(this);
+	}
+	
+	/**
 	 * Start function, begins the game.
 	 * @param filename file created when the game starts/loads.
 	 * @param theExitRoutine How the game exits.
