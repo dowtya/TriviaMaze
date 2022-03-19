@@ -152,10 +152,20 @@ public class GameState implements Serializable {
 		myYCoord = theYCoord;
 	}
 	
+	/**
+	 * Returns myPaths.
+	 * 
+	 * @return boolean[][] of paths.
+	 */
 	public boolean[][] getMyPaths() {
 		return myPaths;
 	}
 	
+	/**
+	 * Sets given boolean array to myPaths.
+	 * 
+	 * @param thePaths array of paths.
+	 */
 	public void setMyPaths(boolean[][] thePaths) {
 		myPaths = thePaths;
 	}
