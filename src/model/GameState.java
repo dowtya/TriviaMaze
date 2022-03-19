@@ -152,6 +152,14 @@ public class GameState implements Serializable {
 		myYCoord = theYCoord;
 	}
 	
+	public boolean[][] getMyPaths() {
+		return myPaths;
+	}
+	
+	public void setMyPaths(boolean[][] thePaths) {
+		myPaths = thePaths;
+	}
+	
 	/**
 	 * Method which gets any possible horizontal paths between two adjacent rooms.
 	 * @param theY Current Y.
@@ -208,18 +216,9 @@ public class GameState implements Serializable {
 	 */
 	public boolean getPathOpenBetweenRooms(final int theStartX, final int theStartY, final int theEndX, final int theEndY) {
 		if (theEndX == theStartX) {
-			boolean value = getVerticalPathBetweenRooms(theStartX, theStartY, theEndY);
-			if (getVerticalPathBetweenRooms(theStartX, theStartY, theEndY) != getVerticalPathBetweenRooms(theStartX, theEndY, theStartY)) {
-				System.out.println("Error: pathcheck not symmetrical");
-			}
-			return value;
-		} else {
-			
-			boolean value = getHorizontalPathBetweenRooms(theStartY, theStartX, theEndX);
-			if (getHorizontalPathBetweenRooms(theStartY, theStartX, theEndX) != getHorizontalPathBetweenRooms(theStartY, theEndX, theStartX)) {
-				System.out.println("Error: pathcheck not symmetrical");
-			}
-			return value;
+			return getVerticalPathBetweenRooms(theStartX, theStartY, theEndY);
+		} else {	
+			return getHorizontalPathBetweenRooms(theStartY, theStartX, theEndX);
 		}
 	}
 	
